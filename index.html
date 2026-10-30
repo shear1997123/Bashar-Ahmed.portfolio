@@ -815,6 +815,7 @@ document.querySelectorAll("[data-vid]").forEach(box => {
   v.addEventListener("play", () => document.querySelectorAll("[data-vid] video").forEach(o => { if (o !== v) o.pause(); }));
 });
 
+const W3F_KEY = "1f2f21b5-ef13-4077-887d-3570c7d2e490";
 $("form").addEventListener("submit", e => {
   e.preventDefault();
   const f = e.target, L = T[lang], done = $("done"), btn = f.querySelector('button[type="submit"]');
@@ -831,39 +832,35 @@ $("form").addEventListener("submit", e => {
   if (d._honey) return; // spam bot
   const subject = `${L.m_subject}: ${d.topic} – ${d.org}`;
   const body = `${d.first} ${d.last}\n${d.mail}\n${d.org}\n\n${L.m_group}: ${d.group}\n${L.m_size}: ${d.size}\n${L.m_topic}: ${d.topic}\n${L.m_when}: ${d.when}\n\n${d.msg}`;
-  // Real form POST to FormSubmit (no CORS issues); it redirects back here with ?sent=1
-  const post = document.createElement("form");
-  post.method = "POST";
-  post.action = "https://formsubmit.co/Basharahmed.duis@gmail.com";
-  post.acceptCharset = "UTF-8";
-  post.hidden = true;
-  const back = location.href.split("#")[0].split("?")[0] + "?sent=1&lang=" + lang + "#booking";
-  const fields = {
-    _subject: subject, _template: "table", _captcha: "false", _next: back,
-    Name: `${d.first} ${d.last}`, email: d.mail, Institution: d.org,
-    Zielgruppe: d.group, Teilnehmer: d.size, Thema: d.topic, Zeitraum: d.when || "–",
-    Nachricht: d.msg, Sprache: lang.toUpperCase()
-  };
-  for (const [k, v] of Object.entries(fields)) {
-    const i = document.createElement("input"); i.type = "hidden"; i.name = k; i.value = v; post.appendChild(i);
-  }
-  document.body.appendChild(post);
+  const label = btn.innerHTML;
   btn.disabled = true; btn.textContent = L.f_sending;
-  post.submit();
+  done.hidden = true;
+  const fallback = () => {
+    const href = "mailto:Basharahmed.duis@gmail.com?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+    done.hidden = false;
+    done.innerHTML = `${esc(L.fail)} <a href="${href}">${esc(L.done_link)}</a><br><small>${esc(L.done_small)}</small>`;
+  };
+  fetch("https://api.web3forms.com/submit", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", "Accept": "application/json" },
+    body: JSON.stringify({
+      access_key: W3F_KEY, subject, from_name: "Website Bashar Ahmed", replyto: d.mail, botcheck: "",
+      Name: `${d.first} ${d.last}`, Email: d.mail, Institution: d.org,
+      Zielgruppe: d.group, Teilnehmer: d.size, Thema: d.topic, Zeitraum: d.when || "–",
+      Nachricht: d.msg, Sprache: lang.toUpperCase()
+    })
+  })
+    .then(r => r.json().then(j => ({ ok: r.ok, j })))
+    .then(({ ok, j }) => {
+      if (!ok || !j.success) throw new Error(j.message || "failed");
+      f.reset(); render();
+      done.hidden = false;
+      done.innerHTML = `<strong>${esc(L.sent)}</strong><br><small>${esc(L.sent_small)}</small>`;
+    })
+    .catch(fallback)
+    .finally(() => { btn.disabled = false; btn.innerHTML = label; });
 });
 
-// back from FormSubmit: show the thank-you message
-(() => {
-  const q = new URLSearchParams(location.search);
-  if (q.get("lang") && T[q.get("lang")]) setLang(q.get("lang"));
-  if (q.get("sent") === "1") {
-    const L = T[lang], done = $("done");
-    done.hidden = false;
-    done.innerHTML = `<strong>${esc(L.sent)}</strong><br><small>${esc(L.sent_small)}</small>`;
-    history.replaceState(null, "", location.pathname + "#booking");
-    setTimeout(() => $("booking").scrollIntoView(), 50);
-  }
-})();
 </script>
 </body>
 </html>
