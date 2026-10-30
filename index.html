@@ -1,1282 +1,823 @@
-<!DOCTYPE html>
-<html lang="de">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Bashar Ahmed | Workshop-Leiter & Speaker</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <style>
-    :root {
-      --cream: #FAF7F2;
-      --warm-white: #FFFCF8;
-      --charcoal: #1C1C1C;
-      --deep: #2A2420;
-      --terra: #B85C38;
-      --terra-light: #D4714A;
-      --sage: #6B8F71;
-      --gold: #C9A84C;
-      --light-brown: #E8DDD0;
-      --mid-brown: #C4B5A5;
-      --text-muted: #6B6159;
-    }
-
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      font-family: 'DM Sans', sans-serif;
-      background-color: var(--cream);
-      color: var(--charcoal);
-      overflow-x: hidden;
-    }
-
-    /* ── LANGUAGE TOGGLE ── */
-    .lang-bar {
-      position: fixed;
-      top: 0; right: 0; left: 0;
-      z-index: 1000;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 14px 40px;
-      background: rgba(250,247,242,0.92);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--light-brown);
-    }
-
-    .logo {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: var(--deep);
-      letter-spacing: 0.02em;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 32px;
-      list-style: none;
-    }
-
-    .nav-links a {
-      text-decoration: none;
-      color: var(--text-muted);
-      font-size: 0.85rem;
-      font-weight: 500;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      transition: color 0.2s;
-    }
-
-    .nav-links a:hover { color: var(--terra); }
-
-    .lang-toggle {
-      display: flex;
-      gap: 6px;
-    }
-
-    .lang-btn {
-      padding: 5px 12px;
-      border: 1.5px solid var(--mid-brown);
-      background: transparent;
-      border-radius: 20px;
-      font-size: 0.78rem;
-      font-weight: 600;
-      cursor: pointer;
-      letter-spacing: 0.05em;
-      transition: all 0.2s;
-      color: var(--text-muted);
-    }
-
-    .lang-btn.active {
-      background: var(--terra);
-      border-color: var(--terra);
-      color: white;
-    }
-
-    /* ── HERO ── */
-    .hero {
-      min-height: 100vh;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      padding-top: 70px;
-      overflow: hidden;
-    }
-
-    .hero-left {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 80px 60px 80px 80px;
-      position: relative;
-    }
-
-    .hero-eyebrow {
-      font-size: 0.8rem;
-      font-weight: 600;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--terra);
-      margin-bottom: 20px;
-    }
-
-    .hero-title {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(2.8rem, 4.5vw, 4.2rem);
-      font-weight: 900;
-      line-height: 1.1;
-      color: var(--deep);
-      margin-bottom: 28px;
-    }
-
-    .hero-title span { color: var(--terra); }
-
-    .hero-subtitle {
-      font-size: 1.05rem;
-      line-height: 1.75;
-      color: var(--text-muted);
-      max-width: 480px;
-      margin-bottom: 40px;
-      font-weight: 300;
-    }
-
-    .hero-stats {
-      display: flex;
-      gap: 40px;
-      margin-bottom: 48px;
-    }
-
-    .stat-item { text-align: left; }
-
-    .stat-number {
-      font-family: 'Playfair Display', serif;
-      font-size: 2.6rem;
-      font-weight: 900;
-      color: var(--deep);
-      line-height: 1;
-    }
-
-    .stat-label {
-      font-size: 0.78rem;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-top: 4px;
-    }
-
-    .hero-cta {
-      display: flex;
-      gap: 16px;
-      flex-wrap: wrap;
-    }
-
-    .btn-primary {
-      padding: 15px 34px;
-      background: var(--terra);
-      color: white;
-      border: none;
-      border-radius: 4px;
-      font-size: 0.88rem;
-      font-weight: 600;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      cursor: pointer;
-      text-decoration: none;
-      transition: background 0.2s, transform 0.2s;
-      display: inline-block;
-    }
-
-    .btn-primary:hover { background: var(--terra-light); transform: translateY(-1px); }
-
-    .btn-outline {
-      padding: 15px 34px;
-      background: transparent;
-      color: var(--deep);
-      border: 2px solid var(--deep);
-      border-radius: 4px;
-      font-size: 0.88rem;
-      font-weight: 600;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      cursor: pointer;
-      text-decoration: none;
-      transition: all 0.2s;
-      display: inline-block;
-    }
-
-    .btn-outline:hover { background: var(--deep); color: white; }
-
-    .hero-right {
-      background: var(--deep);
-      position: relative;
-      overflow: hidden;
-      display: flex;
-      align-items: flex-end;
-    }
-
-    .hero-image-bg {
-      position: absolute;
-      inset: 0;
-      background: 
-        linear-gradient(160deg, rgba(184,92,56,0.3) 0%, transparent 50%),
-        linear-gradient(to top, rgba(26,26,26,0.9) 0%, transparent 60%);
-      z-index: 1;
-    }
-
-    .hero-pattern {
-      position: absolute;
-      inset: 0;
-      background-image: 
-        radial-gradient(circle at 30% 20%, rgba(201,168,76,0.12) 0%, transparent 50%),
-        radial-gradient(circle at 80% 70%, rgba(184,92,56,0.15) 0%, transparent 50%);
-      z-index: 0;
-    }
-
-    .hero-img-placeholder {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      opacity: 0.5;
-    }
-
-    .hero-caption {
-      position: relative;
-      z-index: 2;
-      padding: 48px;
-      width: 100%;
-    }
-
-    .hero-award {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      background: rgba(201,168,76,0.15);
-      border: 1px solid rgba(201,168,76,0.35);
-      border-radius: 4px;
-      padding: 10px 16px;
-      margin-bottom: 16px;
-    }
-
-    .award-icon { font-size: 1.1rem; }
-
-    .award-text {
-      font-size: 0.8rem;
-      color: var(--gold);
-      font-weight: 600;
-      letter-spacing: 0.06em;
-    }
-
-    .hero-caption-name {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.8rem;
-      color: white;
-      font-weight: 700;
-    }
-
-    .hero-caption-role {
-      font-size: 0.88rem;
-      color: rgba(255,255,255,0.6);
-      margin-top: 4px;
-    }
-
-    /* ── ABOUT ── */
-    .section {
-      padding: 100px 80px;
-    }
-
-    .section-tag {
-      font-size: 0.78rem;
-      font-weight: 600;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--terra);
-      margin-bottom: 14px;
-    }
-
-    .section-title {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(2rem, 3vw, 3rem);
-      font-weight: 800;
-      color: var(--deep);
-      line-height: 1.2;
-      margin-bottom: 28px;
-    }
-
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 80px;
-      align-items: start;
-    }
-
-    .about-text p {
-      font-size: 1rem;
-      line-height: 1.85;
-      color: var(--text-muted);
-      margin-bottom: 20px;
-      font-weight: 300;
-    }
-
-    .about-text p strong {
-      color: var(--deep);
-      font-weight: 600;
-    }
-
-    .values-list {
-      list-style: none;
-      margin-top: 30px;
-    }
-
-    .values-list li {
-      display: flex;
-      align-items: flex-start;
-      gap: 14px;
-      padding: 14px 0;
-      border-bottom: 1px solid var(--light-brown);
-      font-size: 0.95rem;
-      color: var(--charcoal);
-    }
-
-    .value-dot {
-      width: 8px;
-      height: 8px;
-      background: var(--terra);
-      border-radius: 50%;
-      flex-shrink: 0;
-      margin-top: 7px;
-    }
-
-    .about-visual {
-      background: var(--deep);
-      border-radius: 2px;
-      padding: 48px;
-      color: white;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .about-visual::before {
-      content: '"';
-      position: absolute;
-      top: -20px;
-      right: 20px;
-      font-family: 'Playfair Display', serif;
-      font-size: 14rem;
-      color: rgba(255,255,255,0.04);
-      line-height: 1;
-    }
-
-    .quote-text {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.4rem;
-      line-height: 1.6;
-      font-style: italic;
-      color: white;
-      margin-bottom: 28px;
-      position: relative;
-      z-index: 1;
-    }
-
-    .quote-sub {
-      font-size: 0.85rem;
-      color: rgba(255,255,255,0.5);
-      position: relative;
-      z-index: 1;
-    }
-
-    .media-badges {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 40px;
-      position: relative;
-      z-index: 1;
-    }
-
-    .badge {
-      padding: 8px 16px;
-      border: 1px solid rgba(255,255,255,0.2);
-      border-radius: 2px;
-      font-size: 0.78rem;
-      color: rgba(255,255,255,0.7);
-      letter-spacing: 0.05em;
-    }
-
-    .badge.gold {
-      border-color: rgba(201,168,76,0.5);
-      color: var(--gold);
-    }
-
-    /* ── WORKSHOPS ── */
-    .workshops-section {
-      background: var(--warm-white);
-      padding: 100px 80px;
-    }
-
-    .workshops-header {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 60px;
-      align-items: end;
-      margin-bottom: 64px;
-    }
-
-    .workshops-intro {
-      font-size: 1rem;
-      line-height: 1.8;
-      color: var(--text-muted);
-      font-weight: 300;
-    }
-
-    .workshops-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2px;
-    }
-
-    .workshop-card {
-      background: var(--deep);
-      padding: 44px 36px;
-      position: relative;
-      overflow: hidden;
-      cursor: pointer;
-      transition: transform 0.3s;
-    }
-
-    .workshop-card:hover { transform: translateY(-4px); }
-
-    .workshop-card::after {
-      content: '';
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      height: 3px;
-      background: var(--terra);
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform 0.3s;
-    }
-
-    .workshop-card:hover::after { transform: scaleX(1); }
-
-    .workshop-card.light {
-      background: var(--light-brown);
-    }
-
-    .workshop-number {
-      font-family: 'Playfair Display', serif;
-      font-size: 3rem;
-      font-weight: 900;
-      color: rgba(255,255,255,0.07);
-      position: absolute;
-      top: 16px; right: 24px;
-      line-height: 1;
-    }
-
-    .workshop-card.light .workshop-number {
-      color: rgba(42,36,32,0.06);
-    }
-
-    .workshop-icon {
-      font-size: 1.6rem;
-      margin-bottom: 20px;
-    }
-
-    .workshop-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.2rem;
-      font-weight: 700;
-      color: white;
-      margin-bottom: 14px;
-      line-height: 1.3;
-    }
-
-    .workshop-card.light .workshop-title {
-      color: var(--deep);
-    }
-
-    .workshop-desc {
-      font-size: 0.88rem;
-      line-height: 1.7;
-      color: rgba(255,255,255,0.6);
-      font-weight: 300;
-    }
-
-    .workshop-card.light .workshop-desc {
-      color: var(--text-muted);
-    }
-
-    .workshop-methods {
-      margin-top: 20px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-    }
-
-    .method-tag {
-      font-size: 0.7rem;
-      padding: 4px 10px;
-      border: 1px solid rgba(255,255,255,0.2);
-      border-radius: 20px;
-      color: rgba(255,255,255,0.5);
-      letter-spacing: 0.04em;
-    }
-
-    .workshop-card.light .method-tag {
-      border-color: var(--mid-brown);
-      color: var(--text-muted);
-    }
-
-    /* ── HIGHLIGHTS ── */
-    .highlights-section {
-      padding: 100px 80px;
-    }
-
-    .highlights-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 24px;
-      margin-top: 56px;
-    }
-
-    .highlight-card {
-      border: 1.5px solid var(--light-brown);
-      padding: 32px 28px;
-      border-radius: 2px;
-      transition: border-color 0.2s, box-shadow 0.2s;
-    }
-
-    .highlight-card:hover {
-      border-color: var(--terra);
-      box-shadow: 0 8px 40px rgba(184,92,56,0.08);
-    }
-
-    .highlight-emoji {
-      font-size: 1.8rem;
-      margin-bottom: 16px;
-    }
-
-    .highlight-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.05rem;
-      font-weight: 700;
-      color: var(--deep);
-      margin-bottom: 10px;
-      line-height: 1.3;
-    }
-
-    .highlight-text {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      line-height: 1.7;
-      font-weight: 300;
-    }
-
-    /* ── TESTIMONIALS ── */
-    .testimonials-section {
-      background: var(--deep);
-      padding: 100px 80px;
-    }
-
-    .testimonials-section .section-tag { color: var(--gold); }
-    .testimonials-section .section-title { color: white; }
-
-    .testimonials-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2px;
-      margin-top: 56px;
-    }
-
-    .testimonial-card {
-      background: rgba(255,255,255,0.04);
-      padding: 44px 36px;
-      border-top: 2px solid var(--terra);
-    }
-
-    .testimonial-quote {
-      font-size: 0.95rem;
-      line-height: 1.85;
-      color: rgba(255,255,255,0.75);
-      font-style: italic;
-      margin-bottom: 28px;
-      font-weight: 300;
-    }
-
-    .testimonial-author {
-      font-weight: 600;
-      font-size: 0.88rem;
-      color: white;
-    }
-
-    .testimonial-role {
-      font-size: 0.8rem;
-      color: rgba(255,255,255,0.4);
-      margin-top: 3px;
-    }
-
-    /* ── BOOKING FORM ── */
-    .booking-section {
-      padding: 100px 80px;
-      background: var(--cream);
-    }
-
-    .booking-grid {
-      display: grid;
-      grid-template-columns: 1fr 1.4fr;
-      gap: 80px;
-      align-items: start;
-      margin-top: 56px;
-    }
-
-    .booking-info h3 {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: var(--deep);
-      margin-bottom: 20px;
-    }
-
-    .booking-info p {
-      font-size: 0.92rem;
-      color: var(--text-muted);
-      line-height: 1.8;
-      margin-bottom: 32px;
-      font-weight: 300;
-    }
-
-    .contact-line {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 14px;
-      font-size: 0.9rem;
-      color: var(--charcoal);
-    }
-
-    .contact-icon {
-      width: 36px;
-      height: 36px;
-      background: var(--light-brown);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.9rem;
-      flex-shrink: 0;
-    }
-
-    .booking-form {
-      background: white;
-      padding: 52px;
-      border-radius: 2px;
-      box-shadow: 0 20px 80px rgba(0,0,0,0.06);
-    }
-
-    .form-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: var(--deep);
-      margin-bottom: 8px;
-    }
-
-    .form-subtitle {
-      font-size: 0.88rem;
-      color: var(--text-muted);
-      margin-bottom: 36px;
-    }
-
-    .form-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-    }
-
-    .form-group {
-      margin-bottom: 22px;
-    }
-
-    .form-group label {
-      display: block;
-      font-size: 0.78rem;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      margin-bottom: 8px;
-    }
-
-    .form-group input,
-    .form-group select,
-    .form-group textarea {
-      width: 100%;
-      padding: 13px 16px;
-      border: 1.5px solid var(--light-brown);
-      border-radius: 3px;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.92rem;
-      color: var(--charcoal);
-      background: var(--cream);
-      outline: none;
-      transition: border-color 0.2s;
-    }
-
-    .form-group input:focus,
-    .form-group select:focus,
-    .form-group textarea:focus {
-      border-color: var(--terra);
-    }
-
-    .form-group textarea {
-      resize: vertical;
-      min-height: 110px;
-    }
-
-    .form-submit {
-      width: 100%;
-      padding: 16px;
-      background: var(--terra);
-      color: white;
-      border: none;
-      border-radius: 3px;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.9rem;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      cursor: pointer;
-      transition: background 0.2s;
-      margin-top: 8px;
-    }
-
-    .form-submit:hover { background: var(--terra-light); }
-
-    /* ── FOOTER ── */
-    footer {
-      background: var(--charcoal);
-      padding: 48px 80px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .footer-logo {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.2rem;
-      color: white;
-      font-weight: 700;
-    }
-
-    .footer-copy {
-      font-size: 0.8rem;
-      color: rgba(255,255,255,0.35);
-    }
-
-    .footer-links {
-      display: flex;
-      gap: 24px;
-    }
-
-    .footer-links a {
-      font-size: 0.8rem;
-      color: rgba(255,255,255,0.4);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-
-    .footer-links a:hover { color: white; }
-
-    /* ── LANGUAGE SWITCHING ── */
-    .de-text { display: block; }
-    .en-text { display: none; }
-
-    body.lang-en .de-text { display: none; }
-    body.lang-en .en-text { display: block; }
-
-    /* ── RESPONSIVE ── */
-    @media (max-width: 900px) {
-      .hero { grid-template-columns: 1fr; }
-      .hero-right { min-height: 360px; }
-      .about-grid, .workshops-header, .booking-grid { grid-template-columns: 1fr; gap: 40px; }
-      .workshops-grid { grid-template-columns: 1fr; }
-      .highlights-grid { grid-template-columns: 1fr 1fr; }
-      .testimonials-grid { grid-template-columns: 1fr; }
-      .section, .workshops-section, .highlights-section, .testimonials-section, .booking-section { padding: 64px 28px; }
-      .hero-left { padding: 60px 28px; }
-      .form-row { grid-template-columns: 1fr; }
-      .booking-form { padding: 32px 24px; }
-      .lang-bar { padding: 14px 20px; }
-      .nav-links { display: none; }
-      footer { flex-direction: column; gap: 16px; text-align: center; padding: 32px 28px; }
-    }
-
-    /* ── ANIMATIONS ── */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(24px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .hero-eyebrow { animation: fadeUp 0.6s ease both; }
-    .hero-title { animation: fadeUp 0.6s 0.1s ease both; }
-    .hero-subtitle { animation: fadeUp 0.6s 0.2s ease both; }
-    .hero-stats { animation: fadeUp 0.6s 0.3s ease both; }
-    .hero-cta { animation: fadeUp 0.6s 0.4s ease both; }
-  </style>
-</head>
-<body>
-
-<!-- NAV -->
-<nav class="lang-bar">
-  <div class="logo">Bashar Ahmed</div>
-  <ul class="nav-links">
-    <li><a href="#about"><span class="de-text">Über mich</span><span class="en-text">About</span></a></li>
-    <li><a href="#workshops">Workshops</a></li>
-    <li><a href="#highlights"><span class="de-text">Highlights</span><span class="en-text">Highlights</span></a></li>
-    <li><a href="#booking"><span class="de-text">Anfrage</span><span class="en-text">Book</span></a></li>
-  </ul>
-  <div class="lang-toggle">
-    <button class="lang-btn active" onclick="setLang('de')">DE</button>
-    <button class="lang-btn" onclick="setLang('en')">EN</button>
+<title>Bashar Ahmed Portfolio</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Hanken+Grotesk:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=Noto+Kufi+Arabic:wght@600;800&family=IBM+Plex+Sans+Arabic:wght@400;600&family=Noto+Naskh+Arabic:wght@500;700&display=swap">
+<style>
+/* Layout: a printed manifesto on warm paper. Two serious inks print the photos: crimson (the red of campaigns against violence toward women) and deep petrol (calm, trust). Ink-black type carries the words; italic serif marks the voice. */
+:root {
+  --paper: #F3EEE6;
+  --paper-2: #E9E2D6;
+  --ink: #17161C;
+  --ink-soft: #4A4752;
+  --pink: #A8322D;
+  --blue: #1F4E5F;
+  --sun: #C99A2E;
+  --line: rgba(23,22,28,.16);
+
+  --f-display: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+  --f-body: "Hanken Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --f-voice: "Instrument Serif", Georgia, "Times New Roman", serif;
+  --lh-hero: .9;
+  --lh-h2: .98;
+  --gutter: max(16px, env(safe-area-inset-left, 0px));
+  --gutter-r: max(16px, env(safe-area-inset-right, 0px));
+  color-scheme: light;
+}
+html[lang="ar"] {
+  --f-display: "Noto Kufi Arabic", "Segoe UI", Tahoma, sans-serif;
+  --f-body: "IBM Plex Sans Arabic", "Segoe UI", Tahoma, sans-serif;
+  --f-voice: "Noto Naskh Arabic", "Times New Roman", serif;
+  --lh-hero: 1.35;
+  --lh-h2: 1.4;
+}
+html[dir="rtl"] * { letter-spacing: 0 !important; }
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; overflow-x: clip; }
+body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--f-body); font-size: 17px; line-height: 1.65; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+/* paper grain over everything */
+body::after {
+  content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 100; opacity: .22; mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .1 0 0 0 0 .09 0 0 0 0 .08 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 60; background: var(--paper); }
+img, video { max-width: 100%; display: block; }
+a { color: inherit; }
+::selection { background: var(--pink); color: var(--paper); }
+:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
+
+.wrap { max-width: 1320px; margin: 0 auto; padding-left: max(36px, var(--gutter)); padding-right: max(36px, var(--gutter-r)); }
+@media (max-width: 640px) { .wrap { padding-left: var(--gutter); padding-right: var(--gutter-r); } }
+
+.eyebrow { display: inline-flex; align-items: center; gap: 10px; margin: 0 0 22px; font-size: .78rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; }
+.eyebrow::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--pink); }
+h1, h2, h3 { margin: 0; text-wrap: balance; }
+.h2 { font-family: var(--f-display); font-weight: 800; font-size: clamp(2.5rem, 6vw, 5.4rem); line-height: var(--lh-h2); letter-spacing: -.035em; }
+html[lang="ar"] .h2 { font-size: clamp(2rem, 4.6vw, 3.8rem); }
+.h2 em { font-family: var(--f-voice); font-style: italic; font-weight: 400; letter-spacing: -.01em; color: var(--blue); }
+html[lang="ar"] .h2 em { font-style: normal; font-weight: 700; }
+.lede { color: var(--ink-soft); font-size: 1.08rem; max-width: 52ch; margin: 0; }
+
+/* riso print: grey photo screened onto one fluorescent ink */
+.riso { position: relative; overflow: hidden; background: var(--pink); isolation: isolate; }
+.riso.blue { background: var(--blue); }
+.riso img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(1) contrast(1.15) brightness(1.08); mix-blend-mode: screen; transition: filter .5s ease, mix-blend-mode .5s; }
+.riso::after { content: ""; position: absolute; inset: 0; pointer-events: none; mix-blend-mode: multiply; opacity: .35;
+  background-image: radial-gradient(rgba(23,22,28,.55) .6px, transparent .8px); background-size: 4px 4px; transition: opacity .5s; }
+.riso:hover img, .riso:focus-within img { filter: none; mix-blend-mode: normal; }
+.riso:hover::after { opacity: 0; }
+
+/* NAV */
+.nav { position: fixed; top: env(safe-area-inset-top, 0px); left: 0; right: 0; z-index: 50; transition: background .3s, box-shadow .3s; }
+.nav.solid { background: rgba(245,240,232,.92); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); box-shadow: 0 1px 0 var(--line); }
+.nav .wrap { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding-block: 16px; }
+.logo { font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 1.3rem; letter-spacing: -.03em; text-decoration: none; white-space: nowrap; direction: ltr; display: inline-flex; align-items: center; gap: 8px; }
+.logo i { width: 12px; height: 12px; border-radius: 50%; background: var(--pink); box-shadow: 6px 0 0 var(--blue); margin-inline-end: 6px; }
+.nav ul { display: flex; gap: 6px; list-style: none; margin: 0; padding: 0; }
+.nav ul a { display: block; text-decoration: none; font-size: .9rem; font-weight: 600; padding: 8px 14px; border-radius: 999px; transition: background .2s, color .2s; }
+.nav ul a:hover { background: var(--ink); color: var(--paper); }
+.lang { display: flex; gap: 4px; flex-shrink: 0; }
+.lang button { background: none; border: 1.5px solid var(--ink); color: var(--ink); font: 700 .74rem/1 "Hanken Grotesk", "IBM Plex Sans Arabic", sans-serif; padding: 7px 10px; border-radius: 999px; cursor: pointer; transition: background .2s, color .2s; }
+.lang button:hover { background: var(--paper-2); }
+.lang button[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+@media (max-width: 1000px) { .nav ul { display: none; } }
+@media (max-width: 420px) { .lang button { padding: 6px 7px; } .logo { font-size: 1.1rem; } }
+
+/* HERO */
+.hero { padding-top: 120px; padding-bottom: 70px; position: relative; overflow: hidden; }
+.hero-grid { display: grid; grid-template-columns: 1.05fr .95fr; gap: 56px; align-items: center; }
+.hero-grid > * { min-width: 0; }
+.hero-title { font-family: var(--f-display); font-weight: 800; font-size: clamp(3.4rem, 9.4vw, 9rem); line-height: var(--lh-hero); letter-spacing: -.05em; margin: 0 0 34px; overflow-wrap: break-word; }
+html[lang="ar"] .hero-title { font-size: clamp(2.8rem, 7vw, 6rem); }
+.hero-title .line { display: block; }
+.hero-title .voice { font-family: var(--f-voice); font-style: italic; font-weight: 400; color: var(--pink); letter-spacing: -.02em; padding-inline-end: .06em; }
+html[lang="ar"] .hero-title .voice { font-style: normal; font-weight: 700; }
+.hero-title .mark { position: relative; display: inline-block; z-index: 0; }
+.hero-title .mark::after { content: ""; position: absolute; z-index: -1; left: -.04em; right: -.06em; bottom: .08em; height: .34em; background: var(--sun); transform: skewX(-12deg) rotate(-1deg); }
+.hero-sub { font-size: 1.15rem; color: var(--ink-soft); max-width: 46ch; margin: 0 0 34px; }
+.cta { display: flex; gap: 12px; flex-wrap: wrap; }
+.btn { display: inline-flex; align-items: center; gap: 10px; padding: 16px 26px; border-radius: 999px; text-decoration: none; cursor: pointer; font: 700 .95rem/1.2 var(--f-body); border: 2px solid var(--ink); background: var(--ink); color: var(--paper); transition: transform .2s, box-shadow .2s, background .2s; }
+.btn:hover { transform: translate(-3px, -3px); box-shadow: 5px 5px 0 var(--pink); }
+.btn.ghost { background: transparent; color: var(--ink); }
+.btn.ghost:hover { box-shadow: 5px 5px 0 var(--blue); }
+.btn .arr { display: inline-block; }
+html[dir="rtl"] .btn .arr { transform: scaleX(-1); }
+.stats { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 42px; }
+.stat { padding: 14px 20px; border: 1.5px solid var(--ink); border-radius: 18px; background: var(--paper); min-width: 130px; }
+.stat b { display: block; font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 2.3rem; line-height: 1; letter-spacing: -.04em; font-variant-numeric: tabular-nums; }
+.stat span { font-size: .78rem; font-weight: 600; color: var(--ink-soft); }
+.stat:nth-child(1) b { color: var(--pink); }
+.stat:nth-child(2) b { color: var(--blue); }
+
+.hero-art { position: relative; padding: 28px 0 28px 28px; isolation: isolate; }
+.hero-art::before { content: ""; position: absolute; z-index: -1; top: 0; bottom: 0; left: 0; right: -200px; background: var(--pink); }
+.hero-art::after { content: ""; position: absolute; z-index: -1; top: 28px; bottom: 56px; left: 56px; width: 6px; background: var(--sun); transform: translateX(-38px); }
+html[dir="rtl"] .hero-art { padding: 28px 28px 28px 0; }
+html[dir="rtl"] .hero-art::before { left: -200px; right: 0; }
+html[dir="rtl"] .hero-art::after { left: auto; right: 56px; transform: translateX(38px); }
+.hero-photo { position: relative; aspect-ratio: 3/4; width: 100%; max-height: 82vh; overflow: hidden; background: var(--ink); box-shadow: 0 30px 60px -20px rgba(23,22,28,.55); }
+.hero-photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; filter: grayscale(1) contrast(1.12) brightness(1.02); transition: transform 1.2s cubic-bezier(.2,.7,.2,1); }
+.hero-photo:hover img { transform: scale(1.04); }
+@media (prefers-reduced-motion: no-preference) {
+  .hero-art::before { animation: slab 1s cubic-bezier(.7,0,.2,1) both; transform-origin: right; }
+  @keyframes slab { from { transform: scaleX(0); } to { transform: none; } }
+  .hero-title .line { animation: rise .8s cubic-bezier(.2,.7,.2,1) both; }
+  .hero-title .line:nth-child(2) { animation-delay: .07s; }
+  .hero-title .line:nth-child(3) { animation-delay: .14s; }
+  .hero-photo { animation: drop 1s .15s cubic-bezier(.2,.8,.2,1.2) both; }
+  @keyframes rise { from { transform: translateY(30%); opacity: 0; } to { transform: none; opacity: 1; } }
+  @keyframes drop { from { transform: translateY(30px); opacity: 0; } to { transform: none; opacity: 1; } }
+}
+@media (max-width: 900px) {
+  .hero { padding-top: 96px; }
+  .hero-grid { grid-template-columns: 1fr; }
+  .hero-art { max-width: 520px; margin: 16px 0 0; width: calc(100% - 4px); }
+}
+
+/* TICKER */
+.ticker-wrap { overflow: hidden; }
+.ticker { background: var(--ink); color: var(--paper); overflow: hidden; direction: ltr; }
+.ticker-track { display: flex; width: max-content; padding-block: 16px; }
+.ticker-track span { font-family: var(--f-display); font-weight: 800; font-size: 1.6rem; letter-spacing: -.02em; white-space: nowrap; padding-right: 34px; display: inline-flex; align-items: center; gap: 34px; }
+.ticker-track span:nth-child(3n+2) { font-family: var(--f-voice); font-style: italic; font-weight: 400; color: var(--sun); font-size: 1.9rem; }
+.ticker-track span::after { content: ""; width: 9px; height: 9px; background: var(--pink); }
+@media (prefers-reduced-motion: no-preference) { .ticker-track { animation: tick 40s linear infinite; } @keyframes tick { to { transform: translateX(-50%); } } }
+
+section { padding-block: clamp(84px, 11vw, 150px); }
+
+/* ABOUT */
+.about-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: clamp(40px, 6vw, 96px); align-items: start; }
+.about-grid > * { min-width: 0; }
+.about-text .h2 { margin-bottom: 34px; }
+.about-text p { color: var(--ink-soft); max-width: 60ch; margin: 0 0 18px; }
+.about-text strong { color: var(--ink); font-weight: 700; background: linear-gradient(transparent 62%, rgba(201,154,46,.32) 62%); }
+.values { list-style: none; padding: 0; margin: 34px 0 0; display: grid; gap: 10px; }
+.values li { display: flex; gap: 14px; align-items: flex-start; padding: 14px 18px; border: 1.5px solid var(--ink); border-radius: 16px; font-weight: 500; background: var(--paper); transition: transform .2s, box-shadow .2s; }
+.values li:hover { transform: translate(-2px, -2px); box-shadow: 4px 4px 0 var(--blue); }
+.values li::before { content: ""; width: 8px; height: 8px; background: var(--pink); flex-shrink: 0; margin-top: 10px; }
+.quote-col { position: sticky; top: 110px; }
+.quote-photo { aspect-ratio: 4/5; border-radius: 8px; }
+.quote-photo img { object-position: 60% 30%; }
+.quote-card { position: relative; margin: -90px 0 0 auto; margin-inline-start: 18%; background: var(--pink); color: var(--paper); border-radius: 8px; padding: 28px 30px; border: 1.5px solid var(--ink); }
+.quote-card blockquote { margin: 0 0 12px; font-family: var(--f-voice); font-style: italic; font-size: clamp(1.4rem, 2.2vw, 1.9rem); line-height: 1.18; }
+html[lang="ar"] .quote-card blockquote { font-style: normal; line-height: 1.6; }
+.quote-card cite { font-style: normal; font-size: .82rem; font-weight: 700; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; }
+.chip { padding: 7px 13px; border: 1.5px solid var(--ink); border-radius: 999px; font-size: .78rem; font-weight: 600; background: var(--paper); }
+.chip.gold { background: var(--sun); }
+@media (max-width: 900px) { .about-grid { grid-template-columns: 1fr; } .quote-col { position: relative; top: 0; max-width: 520px; } }
+
+/* WORKSHOPS */
+.workshops { background: var(--paper-2); border-block: 1.5px solid var(--ink); }
+.ws-head { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: end; margin-bottom: 56px; }
+.ws-head > * { min-width: 0; }
+.ws-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.ws { position: relative; padding: 30px 28px 28px; border: 1.5px solid var(--ink); border-radius: 10px; background: var(--paper); display: flex; flex-direction: column; gap: 14px; min-width: 0; transition: transform .25s cubic-bezier(.2,.7,.2,1), box-shadow .25s, background .25s, color .25s; }
+.ws:hover { transform: translate(-4px, -4px); }
+.ws-0:hover { box-shadow: 8px 8px 0 var(--pink); }
+.ws-1:hover { box-shadow: 8px 8px 0 var(--blue); }
+.ws-2:hover { box-shadow: 8px 8px 0 var(--sun); }
+.ws-k { align-self: flex-start; font-size: .74rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; padding: 6px 12px; border-radius: 999px; color: var(--paper); }
+.ws-0 .ws-k { background: var(--pink); }
+.ws-1 .ws-k { background: var(--blue); }
+.ws-2 .ws-k { background: var(--sun); color: var(--ink); }
+.ws h3 { font-family: var(--f-display); font-weight: 800; font-size: clamp(1.45rem, 2vw, 1.75rem); line-height: 1.05; letter-spacing: -.03em; }
+html[lang="ar"] .ws h3 { font-size: 1.3rem; line-height: 1.55; }
+.ws p { margin: 0; color: var(--ink-soft); font-size: .96rem; }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; padding-top: 10px; }
+.tags span { font-size: .74rem; font-weight: 600; padding: 4px 10px; border-radius: 999px; border: 1px solid var(--line); color: var(--ink-soft); }
+@media (max-width: 1000px) { .ws-grid { grid-template-columns: 1fr 1fr; } .ws-head { grid-template-columns: 1fr; } }
+@media (max-width: 640px) { .ws-grid { grid-template-columns: 1fr; } }
+
+/* VIDEO */
+.stage-grid { display: grid; grid-template-columns: 1.6fr .7fr; gap: 28px; margin-top: 56px; align-items: center; }
+.stage-grid > * { min-width: 0; }
+.vid { position: relative; background: var(--ink); overflow: hidden; border-radius: 10px; border: 1.5px solid var(--ink); }
+.vid video { width: 100%; height: 100%; object-fit: cover; }
+.vid.wide { aspect-ratio: 16/10; box-shadow: 12px 12px 0 var(--blue); }
+.vid.tall { aspect-ratio: 3/4; box-shadow: 10px 10px 0 var(--pink); }
+.play { position: absolute; inset: 0; z-index: 2; display: grid; place-items: center; border: 0; cursor: pointer; background: rgba(23,22,28,.18); }
+.play-dot { width: 92px; height: 92px; border-radius: 50%; background: var(--sun); border: 1.5px solid var(--ink); display: grid; place-items: center; transition: transform .25s; }
+.play:hover .play-dot { transform: scale(1.08); }
+.play-dot svg { width: 26px; height: 26px; margin-left: 5px; fill: var(--ink); }
+.vid.playing .play { display: none; }
+@media (max-width: 860px) { .stage-grid { grid-template-columns: 1fr; } .vid.tall { max-width: 380px; } }
+
+/* HIGHLIGHTS */
+.highlights { background: var(--blue); color: var(--paper); }
+.highlights .eyebrow::before { background: var(--sun); }
+.highlights .h2 em { color: var(--sun); }
+.hl-list { margin-top: 56px; border-top: 1.5px solid rgba(245,240,232,.4); }
+.hl-row { display: grid; grid-template-columns: 180px 1fr 1.1fr; gap: 30px; align-items: baseline; padding: 30px 0; border-bottom: 1.5px solid rgba(245,240,232,.4); transition: padding .3s; }
+.hl-row:hover { padding-inline-start: 16px; }
+.hl-row > * { min-width: 0; }
+.hl-k { font-size: .76rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; opacity: .75; }
+.hl-row h3 { font-family: var(--f-display); font-weight: 800; font-size: clamp(1.7rem, 3.2vw, 2.8rem); line-height: 1; letter-spacing: -.035em; }
+html[lang="ar"] .hl-row h3 { font-size: clamp(1.4rem, 2.4vw, 2rem); line-height: 1.5; }
+.hl-row p { margin: 0; opacity: .88; }
+.hl-row.star h3 { color: var(--sun); }
+@media (max-width: 820px) { .hl-row { grid-template-columns: 1fr; gap: 10px; } }
+
+/* GALLERY */
+.gallery { columns: 4 240px; column-gap: 22px; margin-top: 56px; }
+.shot { break-inside: avoid; display: block; width: 100%; margin: 0 0 22px; padding: 0; border: 0; background: none; cursor: zoom-in; transform: rotate(var(--tilt, 0deg)); transition: transform .35s cubic-bezier(.2,.7,.2,1); }
+.shot:hover { transform: rotate(0) scale(1.03); z-index: 2; position: relative; }
+.shot .riso { border-radius: 6px; border: 1.5px solid var(--ink); }
+.shot img { height: auto; min-height: 120px; }
+dialog.lb { border: 0; padding: 0; background: transparent; max-width: min(1100px, 94vw); max-height: 92vh; }
+dialog.lb::backdrop { background: rgba(23,22,28,.92); }
+dialog.lb img { max-height: 88vh; width: auto; margin: 0 auto; border-radius: 12px; }
+.lb-close { position: fixed; top: calc(16px + env(safe-area-inset-top, 0px)); right: calc(16px + env(safe-area-inset-right, 0px)); width: 48px; height: 48px; border-radius: 50%; border: 0; background: var(--sun); color: var(--ink); font-size: 1.5rem; cursor: pointer; }
+
+/* BOOKING */
+.booking { background: var(--ink); color: var(--paper); }
+.booking .eyebrow::before { background: var(--sun); }
+.booking .h2 em { color: var(--sun); }
+.book-grid { display: grid; grid-template-columns: .85fr 1.15fr; gap: clamp(40px, 6vw, 90px); margin-top: 56px; align-items: start; }
+.book-grid > * { min-width: 0; }
+.book-info h3 { font-family: var(--f-voice); font-style: italic; font-weight: 400; font-size: 2.2rem; line-height: 1.1; margin-bottom: 14px; }
+html[lang="ar"] .book-info h3 { font-style: normal; font-weight: 700; font-size: 1.7rem; }
+.book-info p { color: rgba(245,240,232,.75); margin: 0 0 30px; max-width: 46ch; }
+.contact { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+.contact li { display: grid; grid-template-columns: 100px 1fr; gap: 12px; padding: 14px 18px; border: 1.5px solid rgba(245,240,232,.25); border-radius: 16px; align-items: baseline; }
+.contact li span { font-size: .72rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--sun); }
+.contact li b { font-weight: 500; user-select: all; overflow-wrap: anywhere; direction: ltr; unicode-bidi: isolate; text-align: start; }
+.form { background: var(--paper); color: var(--ink); border-radius: 12px; padding: clamp(26px, 4vw, 46px); box-shadow: 12px 12px 0 var(--pink); }
+.form h3 { font-family: var(--f-display); font-weight: 800; font-size: 2rem; letter-spacing: -.03em; }
+.form .sub { color: var(--ink-soft); font-size: .88rem; margin: 6px 0 26px; }
+.row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.field { display: flex; flex-direction: column; gap: 7px; margin-bottom: 16px; min-width: 0; }
+.field label { font-size: .78rem; font-weight: 700; }
+.field input, .field select, .field textarea { width: 100%; padding: 13px 16px; background: var(--paper-2); border: 1.5px solid transparent; border-radius: 14px; color: var(--ink); font: 400 1rem var(--f-body); outline: none; transition: border-color .2s, background .2s; }
+.field select { appearance: none; background-image: linear-gradient(45deg, transparent 50%, var(--ink) 50%), linear-gradient(135deg, var(--ink) 50%, transparent 50%); background-position: calc(100% - 20px) 50%, calc(100% - 15px) 50%; background-size: 5px 5px; background-repeat: no-repeat; padding-inline-end: 36px; }
+html[dir="rtl"] .field select { background-position: 15px 50%, 20px 50%; }
+.field textarea { min-height: 120px; resize: vertical; }
+.field input::placeholder, .field textarea::placeholder { color: #8d8893; }
+.field input:focus, .field select:focus, .field textarea:focus { border-color: var(--blue); background: var(--paper); }
+.field .bad { border-color: var(--pink); }
+.form .btn { width: 100%; justify-content: center; margin-top: 8px; padding-block: 18px; }
+.done { margin-top: 18px; padding: 18px; border-radius: 14px; background: var(--paper-2); border: 1.5px solid var(--ink); font-size: .95rem; }
+.done a { color: var(--blue); font-weight: 700; }
+.done small { color: var(--ink-soft); }
+@media (max-width: 900px) { .book-grid { grid-template-columns: 1fr; } }
+@media (max-width: 560px) { .row { grid-template-columns: 1fr; gap: 0; } }
+
+/* FOOTER */
+footer { background: var(--ink); color: var(--paper); padding-block: 0 calc(36px + env(safe-area-inset-bottom, 0px)); overflow: hidden; }
+.footer-big { font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; letter-spacing: -.06em; line-height: .82; font-size: clamp(3.4rem, 15vw, 15rem); color: var(--paper); margin: 0 0 30px; white-space: nowrap; direction: ltr; }
+.footer-big span { font-family: "Instrument Serif", serif; font-style: italic; font-weight: 400; color: var(--sun); letter-spacing: -.02em; }
+.footer-row { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; font-size: .85rem; color: rgba(245,240,232,.6); border-top: 1px solid rgba(245,240,232,.18); padding-top: 22px; }
+.footer-row nav { display: flex; gap: 20px; }
+.footer-row a { color: var(--paper); text-decoration: none; }
+.footer-row a:hover { color: var(--sun); }
+
+/* phone & tablet */
+.nav-right { display: flex; align-items: center; gap: 10px; }
+.menu-btn { display: none; width: 44px; height: 44px; border-radius: 50%; border: 1.5px solid var(--ink); background: var(--paper); cursor: pointer; position: relative; flex-shrink: 0; }
+.menu-btn span { position: absolute; left: 12px; right: 12px; height: 2px; background: var(--ink); transition: transform .25s, top .25s; }
+.menu-btn span:first-child { top: 16px; } .menu-btn span:last-child { top: 24px; }
+.nav.open .menu-btn span:first-child { top: 20px; transform: rotate(45deg); }
+.nav.open .menu-btn span:last-child { top: 20px; transform: rotate(-45deg); }
+@media (max-width: 1000px) {
+  .menu-btn { display: block; }
+  .nav .wrap { position: relative; }
+  .nav ul { display: none; position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; gap: 0; background: var(--paper); border-block: 1.5px solid var(--ink); padding: 10px max(16px, var(--gutter-r)) 18px max(16px, var(--gutter)); }
+  .nav.open ul { display: flex; }
+  .nav.open { background: var(--paper); }
+  .nav ul a { font-family: var(--f-display); font-weight: 800; font-size: 1.6rem; letter-spacing: -.02em; padding: 12px 0; border-radius: 0; border-bottom: 1px solid var(--line); }
+  .nav ul a:hover { background: none; color: var(--pink); }
+}
+@media (min-width: 640px) and (max-width: 1000px) {
+  .hero-grid { grid-template-columns: 1.1fr .9fr; gap: 28px; }
+  .hero-art { max-width: none; margin: 0; }
+  .hero-grid { gap: 36px; }
+  .about-grid { grid-template-columns: 1fr 1fr; gap: 36px; }
+  .quote-col { position: relative; top: 0; }
+}
+@media (max-width: 640px) {
+  section { padding-block: 72px; }
+  .hero { padding-top: 88px; padding-bottom: 48px; }
+  .hero-title { font-size: clamp(2.7rem, 13vw, 4rem); }
+  .hero-sub { font-size: 1.02rem; }
+  .cta .btn { flex: 1 1 auto; justify-content: center; }
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .stat { min-width: 0; padding: 12px; }
+  .stat b { font-size: 1.8rem; }
+  .stat span { font-size: .72rem; display: block; line-height: 1.3; }
+  .hero-art { padding: 18px 0 18px 18px; margin-top: 8px; }
+  html[dir="rtl"] .hero-art { padding: 18px 18px 18px 0; }
+  .hero-art::after { display: none; }
+  .hero-photo { max-height: none; }
+  .quote-card { margin: -50px 0 0; margin-inline-start: 8%; padding: 22px; }
+  .ws { padding: 24px 20px; }
+  .vid.wide { box-shadow: 7px 7px 0 var(--blue); }
+  .vid.tall { box-shadow: 7px 7px 0 var(--pink); margin-inline: auto; max-width: 300px; }
+  .gallery { columns: 2; column-gap: 10px; }
+  .shot { margin-bottom: 10px; }
+  .hl-row { padding: 22px 0; }
+  .form { box-shadow: 7px 7px 0 var(--pink); }
+  .contact li { grid-template-columns: 1fr; gap: 2px; }
+  .footer-row { flex-direction: column; }
+  .play-dot { width: 70px; height: 70px; }
+}
+@media (hover: none) {
+  .ws:hover, .values li:hover, .btn:hover { transform: none; box-shadow: none; }
+}
+</style>
+
+<nav class="nav" id="nav">
+  <div class="wrap">
+    <a href="#top" class="logo"><i></i>Bashar Ahmed</a>
+    <ul id="nav-links">
+      <li><a href="#about" data-t="nav_about"></a></li>
+      <li><a href="#workshops" data-t="nav_ws"></a></li>
+      <li><a href="#stage" data-t="nav_stage"></a></li>
+      <li><a href="#gallery" data-t="nav_gal"></a></li>
+      <li><a href="#booking" data-t="nav_book"></a></li>
+    </ul>
+    <div class="nav-right">
+    <div class="lang" role="group" aria-label="Language">
+      <button type="button" data-lang="de" lang="de">DE</button>
+      <button type="button" data-lang="en" lang="en">EN</button>
+      <button type="button" data-lang="ku" lang="ku">KU</button>
+      <button type="button" data-lang="ar" lang="ar">عربي</button>
+    </div>
+    <button class="menu-btn" id="menu-btn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-links"><span></span><span></span></button>
+    </div>
   </div>
 </nav>
 
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-left">
-    <p class="hero-eyebrow">
-      <span class="de-text">Duisburg, NRW · Seit 2016</span>
-      <span class="en-text">Duisburg, NRW · Since 2016</span>
-    </p>
-    <h1 class="hero-title">
-      <span class="de-text">Bildung, die<br /><span>wirklich</span><br />bewegt.</span>
-      <span class="en-text">Education that<br /><span>truly</span><br />moves people.</span>
-    </h1>
-    <p class="hero-subtitle">
-      <span class="de-text">Ich begleite junge Menschen dabei, schädliche Normen zu hinterfragen, ihre Identität zu stärken und gewaltfreie Perspektiven zu entwickeln – durch offene Gespräche, echte Begegnung und nachhaltige Bildungsarbeit.</span>
-      <span class="en-text">I support young people in questioning harmful norms, building their identity, and developing non-violent perspectives — through open dialogue, genuine connection, and lasting educational work.</span>
-    </p>
-    <div class="hero-stats">
-      <div class="stat-item">
-        <div class="stat-number">8+</div>
-        <div class="stat-label de-text">Jahre Erfahrung</div>
-        <div class="stat-label en-text">Years Experience</div>
+<header class="hero" id="top">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <p class="eyebrow" data-t="hero_eyebrow"></p>
+      <h1 class="hero-title">
+        <span class="line" data-t="hero_l1"></span>
+        <span class="line"><span data-t="hero_l2a"></span> <span class="voice" data-t="hero_l2b"></span></span>
+        <span class="line"><span class="mark" data-t="hero_l3"></span></span>
+      </h1>
+      <p class="hero-sub" data-t="hero_sub"></p>
+      <div class="cta">
+        <a href="#booking" class="btn"><span data-t="cta_book"></span><span class="arr">→</span></a>
+        <a href="#workshops" class="btn ghost" data-t="cta_topics"></a>
       </div>
-      <div class="stat-item">
-        <div class="stat-number">600+</div>
-        <div class="stat-label de-text">Workshops</div>
-        <div class="stat-label en-text">Workshops</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-number">∞</div>
-        <div class="stat-label de-text">Junge Stimmen</div>
-        <div class="stat-label en-text">Young Voices</div>
+      <div class="stats">
+        <div class="stat"><b>8+</b><span data-t="stat_years"></span></div>
+        <div class="stat"><b>600+</b><span data-t="stat_ws"></span></div>
+        <div class="stat"><b>∞</b><span data-t="stat_voices"></span></div>
       </div>
     </div>
-    <div class="hero-cta">
-      <a href="#booking" class="btn-primary">
-        <span class="de-text">Workshop anfragen</span>
-        <span class="en-text">Book a Workshop</span>
-      </a>
-      <a href="#workshops" class="btn-outline">
-        <span class="de-text">Meine Themen</span>
-        <span class="en-text">My Topics</span>
-      </a>
+    <div class="hero-art">
+      <div class="hero-photo"><img src="media/hero-portrait.jpg" alt="Bashar Ahmed" fetchpriority="high"></div>
     </div>
   </div>
+</header>
 
-  <div class="hero-right">
-    <div class="hero-pattern"></div>
-    <div class="hero-image-bg"></div>
-    <!-- Replace the div below with an <img> tag pointing to your own photo -->
-    <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:0;">
-      <span style="font-size:8rem;opacity:0.07;">👤</span>
-    </div>
-    <div class="hero-caption">
-      <div class="hero-award">
-        <span class="award-icon">🏅</span>
-        <span class="award-text de-text">Träger der Mevlüde-Genç-Medaille · NRW</span>
-        <span class="award-text en-text">Mevlüde-Genç-Medal Recipient · NRW</span>
-      </div>
-      <div class="hero-caption-name">Bashar Ahmed</div>
-      <div class="hero-caption-role de-text">Workshop-Leiter · Speaker · Sozialarbeiter</div>
-      <div class="hero-caption-role en-text">Workshop Leader · Speaker · Social Worker</div>
-    </div>
-  </div>
-</section>
+<div class="ticker-wrap"><div class="ticker" aria-hidden="true"><div class="ticker-track" id="ticker"></div></div></div>
 
-<!-- ABOUT -->
-<section class="section" id="about">
-  <div class="about-grid">
+<section id="about">
+  <div class="wrap about-grid">
     <div class="about-text">
-      <p class="section-tag de-text">Über mich</p>
-      <p class="section-tag en-text">About Me</p>
-      <h2 class="section-title">
-        <span class="de-text">Mehr als ein Workshop.<br />Eine Begegnung.</span>
-        <span class="en-text">More than a workshop.<br />A real encounter.</span>
-      </h2>
-      <p class="de-text">
-        Ich bin Bashar Ahmed – <strong>Workshop-Leiter, Speaker und Sozialarbeiter</strong> aus Duisburg. Seit über acht Jahren arbeite ich mit jungen Menschen an Schulen, Jugendeinrichtungen und Institutionen in NRW und darüber hinaus.
-      </p>
-      <p class="en-text">
-        I'm Bashar Ahmed — <strong>workshop leader, speaker and social worker</strong> from Duisburg. For over eight years, I've been working with young people in schools, youth organizations and institutions across NRW and beyond.
-      </p>
-      <p class="de-text">
-        Meine Kernthemen sind <strong>Unterdrückung im Namen der Ehre, toxische Männlichkeit, Identität und Gewaltprävention</strong>. Ich schaffe Räume, in denen junge Menschen ehrlich sprechen können – ohne Angst, ohne Urteil.
-      </p>
-      <p class="en-text">
-        My core topics are <strong>honor-based oppression, toxic masculinity, identity and violence prevention</strong>. I create spaces where young people can speak honestly — without fear, without judgment.
-      </p>
-      <p class="de-text">
-        Mit mehr als 600 geleiteten Workshops habe ich gelernt: <strong>Echter Wandel entsteht, wenn junge Menschen sich gesehen, gehört und ernst genommen fühlen.</strong> Das ist das Herzstück meiner Arbeit.
-      </p>
-      <p class="en-text">
-        With more than 600 workshops under my belt, I've learned one thing above all: <strong>real change happens when young people feel seen, heard and taken seriously.</strong> That is the heart of my work.
-      </p>
-      <ul class="values-list">
-        <li><span class="value-dot"></span><span class="de-text">Dialog auf Augenhöhe – keine Belehrung, sondern echtes Gespräch</span><span class="en-text">Dialogue on equal terms — not lecturing, but genuine conversation</span></li>
-        <li><span class="value-dot"></span><span class="de-text">Empathie als Methode – Gefühle sind Ausgangspunkte, keine Schwäche</span><span class="en-text">Empathy as method — feelings are starting points, not weakness</span></li>
-        <li><span class="value-dot"></span><span class="de-text">Nachhaltigkeit – Impulse, die über den Workshop hinauswirken</span><span class="en-text">Sustainability — impulses that go beyond the workshop itself</span></li>
-        <li><span class="value-dot"></span><span class="de-text">Kulturelle Kompetenz – mit Respekt für Hintergrund und Herkunft</span><span class="en-text">Cultural competence — with respect for background and origin</span></li>
-      </ul>
+      <p class="eyebrow" data-t="about_eyebrow"></p>
+      <h2 class="h2" data-th="about_h2"></h2>
+      <p data-th="about_p1"></p>
+      <p data-th="about_p2"></p>
+      <p data-th="about_p3"></p>
+      <ul class="values" id="values"></ul>
     </div>
-    <div class="about-visual">
-      <p class="quote-text de-text">
-        „Echter Wandel beginnt, wenn junge Menschen sich gesehen, gehört und ernst genommen fühlen."
-      </p>
-      <p class="quote-text en-text">
-        "Real change begins when young people feel seen, heard, and taken seriously."
-      </p>
-      <p class="quote-sub">— Bashar Ahmed</p>
-      <div class="media-badges">
-        <span class="badge gold">🏅 Mevlüde-Genç-Medaille</span>
-        <span class="badge">WDR Interview</span>
-        <span class="badge">One Billion Rising</span>
-        <span class="badge">Kurt-Tucholsky-Schule</span>
-        <span class="badge">Arminia Bielefeld U17</span>
-        <span class="badge">Min.-Präs. Laschet</span>
+    <aside class="quote-col">
+      <div class="riso blue quote-photo"><img src="media/workshop-talk.jpg" alt="" loading="lazy"></div>
+      <div class="quote-card">
+        <blockquote data-t="quote"></blockquote>
+        <cite data-t="name_cite"></cite>
+      </div>
+      <div class="chips">
+        <span class="chip gold" data-t="chip_medal"></span>
+        <span class="chip">WDR</span>
+        <span class="chip">One Billion Rising</span>
+        <span class="chip" data-t="chip_school"></span>
+        <span class="chip">Arminia Bielefeld U17</span>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<section id="workshops" class="workshops">
+  <div class="wrap">
+    <div class="ws-head">
+      <div>
+        <p class="eyebrow" data-t="ws_eyebrow"></p>
+        <h2 class="h2" data-th="ws_h2"></h2>
+      </div>
+      <p class="lede" data-t="ws_lede"></p>
+    </div>
+    <div class="ws-grid" id="ws-grid"></div>
+  </div>
+</section>
+
+<section id="stage">
+  <div class="wrap">
+    <p class="eyebrow" data-t="stage_eyebrow"></p>
+    <h2 class="h2" data-th="stage_h2"></h2>
+    <div class="stage-grid">
+      <div class="vid wide" data-vid>
+        <video src="media/rede-obr.mp4" poster="media/rede-obr-poster.jpg" preload="metadata" playsinline></video>
+        <button class="play" type="button" aria-label="Play"><span class="play-dot"><svg viewBox="0 0 24 24"><path d="M6 4l15 8-15 8z"/></svg></span></button>
+      </div>
+      <div class="vid tall" data-vid>
+        <video src="media/rede-buehne.mp4" poster="media/rede-buehne-poster.jpg" preload="metadata" playsinline></video>
+        <button class="play" type="button" aria-label="Play"><span class="play-dot"><svg viewBox="0 0 24 24"><path d="M6 4l15 8-15 8z"/></svg></span></button>
       </div>
     </div>
   </div>
 </section>
 
-<!-- WORKSHOPS -->
-<section class="workshops-section" id="workshops">
-  <div class="workshops-header">
-    <div>
-      <p class="section-tag de-text">Workshop-Themen</p>
-      <p class="section-tag en-text">Workshop Topics</p>
-      <h2 class="section-title">
-        <span class="de-text">Was ich in Ihre Schule bringe</span>
-        <span class="en-text">What I bring to your school</span>
-      </h2>
-    </div>
-    <p class="workshops-intro">
-      <span class="de-text">Alle Workshops sind interaktiv, altersgerecht und auf Ihre Klasse oder Gruppe abgestimmt. Ich arbeite mit Theaterpädagogik, Gruppenreflexion, Rollenspielen und Fallanalysen – Methoden, die wirklich ankommen.</span>
-      <span class="en-text">All workshops are interactive, age-appropriate and tailored to your class or group. I work with drama pedagogy, group reflection, role play and case analysis — methods that truly resonate.</span>
-    </p>
-  </div>
-
-  <div class="workshops-grid">
-    <div class="workshop-card">
-      <div class="workshop-number">01</div>
-      <div class="workshop-icon">⚖️</div>
-      <h3 class="workshop-title de-text">Unterdrückung im Namen der Ehre</h3>
-      <h3 class="workshop-title en-text">Honor-Based Oppression</h3>
-      <p class="workshop-desc de-text">Wir untersuchen gemeinsam, wie „Ehre" als Kontroll- und Machtinstrument eingesetzt wird – und was das für junge Menschen, besonders Mädchen und Frauen, bedeutet. Sensibel, respektvoll, aufklärend.</p>
-      <p class="workshop-desc en-text">We explore together how "honor" is used as a tool of control — and what this means for young people, especially girls and women. Sensitive, respectful, enlightening.</p>
-      <div class="workshop-methods">
-        <span class="method-tag de-text">Fallanalyse</span><span class="method-tag en-text">Case Analysis</span>
-        <span class="method-tag de-text">Diskussion</span><span class="method-tag en-text">Discussion</span>
-        <span class="method-tag de-text">Rollenspiel</span><span class="method-tag en-text">Role Play</span>
-      </div>
-    </div>
-
-    <div class="workshop-card">
-      <div class="workshop-number">02</div>
-      <div class="workshop-icon">🧭</div>
-      <h3 class="workshop-title de-text">Männlichkeit & Geschlechterrollen</h3>
-      <h3 class="workshop-title en-text">Masculinity & Gender Roles</h3>
-      <p class="workshop-desc de-text">Was bedeutet es, heute ein Mann zu sein? Wir hinterfragen toxische Bilder von Stärke und schaffen Raum für eine neue, gesunde Männlichkeit, die auf Respekt und Selbstverantwortung basiert.</p>
-      <p class="workshop-desc en-text">What does it mean to be a man today? We challenge toxic images of strength and create space for a healthy masculinity grounded in respect and self-responsibility.</p>
-      <div class="workshop-methods">
-        <span class="method-tag de-text">Theaterpädagogik</span><span class="method-tag en-text">Drama Pedagogy</span>
-        <span class="method-tag de-text">Reflexion</span><span class="method-tag en-text">Reflection</span>
-      </div>
-    </div>
-
-    <div class="workshop-card">
-      <div class="workshop-number">03</div>
-      <div class="workshop-icon">🌍</div>
-      <h3 class="workshop-title de-text">Identität, Kultur & Zugehörigkeit</h3>
-      <h3 class="workshop-title en-text">Identity, Culture & Belonging</h3>
-      <p class="workshop-desc de-text">Zwischen Herkunft und Gegenwart: Junge Menschen mit Migrationshintergrund navigieren oft mehrere Identitäten. Dieser Workshop stärkt das Selbstbild und fördert kulturellen Dialog.</p>
-      <p class="workshop-desc en-text">Between roots and reality: young people with migration backgrounds often navigate multiple identities. This workshop strengthens self-image and fosters cultural dialogue.</p>
-      <div class="workshop-methods">
-        <span class="method-tag de-text">Biographiearbeit</span><span class="method-tag en-text">Biography Work</span>
-        <span class="method-tag de-text">Gruppenarbeit</span><span class="method-tag en-text">Group Work</span>
-      </div>
-    </div>
-
-    <div class="workshop-card light">
-      <div class="workshop-number">04</div>
-      <div class="workshop-icon">🕊️</div>
-      <h3 class="workshop-title de-text">Gewaltprävention & gewaltfreie Kommunikation</h3>
-      <h3 class="workshop-title en-text">Violence Prevention & Non-Violent Communication</h3>
-      <p class="workshop-desc de-text">Konflikte gehören zum Leben – wie wir damit umgehen, macht den Unterschied. Praktische Werkzeuge für Deeskalation und respektvolle Kommunikation, direkt anwendbar im Schulalltag.</p>
-      <p class="workshop-desc en-text">Conflict is part of life — how we handle it makes all the difference. Practical tools for de-escalation and respectful communication, directly applicable in everyday school life.</p>
-      <div class="workshop-methods">
-        <span class="method-tag de-text">GFK-Methode</span><span class="method-tag en-text">NVC Method</span>
-        <span class="method-tag de-text">Rollenspiel</span><span class="method-tag en-text">Role Play</span>
-        <span class="method-tag de-text">Übungen</span><span class="method-tag en-text">Exercises</span>
-      </div>
-    </div>
-
-    <div class="workshop-card light">
-      <div class="workshop-number">05</div>
-      <div class="workshop-icon">🤝</div>
-      <h3 class="workshop-title de-text">Respekt, Gleichberechtigung & Menschenwürde</h3>
-      <h3 class="workshop-title en-text">Respect, Equality & Human Dignity</h3>
-      <p class="workshop-desc de-text">Warum haben alle Menschen den gleichen Wert – unabhängig von Geschlecht, Herkunft oder Religion? Ein Workshop, der Grundwerte lebendig macht und in die gelebte Realität überträgt.</p>
-      <p class="workshop-desc en-text">Why does every person have equal worth — regardless of gender, origin or religion? A workshop that brings core values to life and translates them into lived reality.</p>
-      <div class="workshop-methods">
-        <span class="method-tag de-text">Wertereflexion</span><span class="method-tag en-text">Value Reflection</span>
-        <span class="method-tag de-text">Diskussion</span><span class="method-tag en-text">Discussion</span>
-      </div>
-    </div>
-
-    <div class="workshop-card">
-      <div class="workshop-number">06</div>
-      <div class="workshop-icon">🎓</div>
-      <h3 class="workshop-title de-text">Für Lehrkräfte & pädagogische Fachkräfte</h3>
-      <h3 class="workshop-title en-text">For Teachers & Education Professionals</h3>
-      <p class="workshop-desc de-text">Wie erkenne ich Anzeichen von Ehrgewalt oder häuslicher Gewalt? Wie spreche ich Schüler*innen an? Fort- und Weiterbildung für Lehr- und Fachkräfte, die handlungssicher werden wollen.</p>
-      <p class="workshop-desc en-text">How do I recognize signs of honor-based violence? How do I approach students? Professional development for educators who want to feel confident and prepared to act.</p>
-      <div class="workshop-methods">
-        <span class="method-tag de-text">Fortbildung</span><span class="method-tag en-text">Training</span>
-        <span class="method-tag de-text">Praxistransfer</span><span class="method-tag en-text">Practice Transfer</span>
-      </div>
-    </div>
+<section id="highlights" class="highlights">
+  <div class="wrap">
+    <p class="eyebrow" data-t="hl_eyebrow"></p>
+    <h2 class="h2" data-th="hl_h2"></h2>
+    <div class="hl-list" id="hl-grid"></div>
   </div>
 </section>
 
-<!-- HIGHLIGHTS -->
-<section class="highlights-section" id="highlights">
-  <p class="section-tag de-text">Referenzen & Auszeichnungen</p>
-  <p class="section-tag en-text">References & Recognition</p>
-  <h2 class="section-title">
-    <span class="de-text">Vertrauen, das wächst</span>
-    <span class="en-text">Trust that grows</span>
-  </h2>
-  <div class="highlights-grid">
-    <div class="highlight-card">
-      <div class="highlight-emoji">🏅</div>
-      <div class="highlight-title de-text">Mevlüde-Genç-Medaille</div>
-      <div class="highlight-title en-text">Mevlüde-Genç Medal</div>
-      <p class="highlight-text de-text">Ausgezeichnet vom Land NRW für besondere Verdienste um Toleranz und Versöhnung der Kulturen und Religionen – überreicht durch Ministerpräsident Armin Laschet.</p>
-      <p class="highlight-text en-text">Awarded by the State of NRW for outstanding contributions to tolerance and reconciliation between cultures and religions — presented by Minister President Armin Laschet.</p>
-    </div>
-    <div class="highlight-card">
-      <div class="highlight-emoji">📺</div>
-      <div class="highlight-title">WDR</div>
-      <p class="highlight-text de-text">Interview und Rede im WDR im Rahmen der internationalen Kampagne „One Billion Rising" in Duisburg – für ein Ende der Gewalt gegen Frauen.</p>
-      <p class="highlight-text en-text">Interview and speech on WDR as part of the international "One Billion Rising" campaign in Duisburg — for an end to violence against women.</p>
-    </div>
-    <div class="highlight-card">
-      <div class="highlight-emoji">🏫</div>
-      <div class="highlight-title de-text">Kurt-Tucholsky-Schule</div>
-      <div class="highlight-title en-text">Kurt-Tucholsky School</div>
-      <p class="highlight-text de-text">Durchführung eines Professionalisierungsworkshops für Lehr- und pädagogische Fachkräfte – praxisnah und nachhaltig.</p>
-      <p class="highlight-text en-text">Delivered a professional development workshop for teaching and educational staff — practical and lasting in impact.</p>
-    </div>
-    <div class="highlight-card">
-      <div class="highlight-emoji">⚽</div>
-      <div class="highlight-title">Arminia Bielefeld U17</div>
-      <p class="highlight-text de-text">Workshop mit dem Nachwuchsteam von Arminia Bielefeld – Respekt, Teamgeist und gesunde Männlichkeit im Leistungssport.</p>
-      <p class="highlight-text en-text">Workshop with the youth team of Arminia Bielefeld — respect, team spirit and healthy masculinity in professional sport.</p>
-    </div>
+<section id="gallery">
+  <div class="wrap">
+    <p class="eyebrow" data-t="gal_eyebrow"></p>
+    <h2 class="h2" data-th="gal_h2"></h2>
+    <div class="gallery" id="gallery-grid"></div>
   </div>
 </section>
 
-<!-- TESTIMONIALS -->
-<section class="testimonials-section">
-  <p class="section-tag de-text">Was andere sagen</p>
-  <p class="section-tag en-text">What others say</p>
-  <h2 class="section-title">
-    <span class="de-text">Stimmen aus der Praxis</span>
-    <span class="en-text">Voices from practice</span>
-  </h2>
-  <div class="testimonials-grid">
-    <div class="testimonial-card">
-      <p class="testimonial-quote de-text">„Bashar schafft es wie kaum jemand, schwierige Themen so zu besprechen, dass die Schüler wirklich zuhören – und anfangen, selbst nachzudenken."</p>
-      <p class="testimonial-quote en-text">"Bashar manages like almost nobody else to discuss difficult topics in a way that students truly listen — and start thinking for themselves."</p>
-      <div class="testimonial-author de-text">Lehrkraft, Gesamtschule Duisburg</div>
-      <div class="testimonial-author en-text">Teacher, Comprehensive School Duisburg</div>
-      <div class="testimonial-role de-text">Rückmeldung nach Workshop (Klasse 9)</div>
-      <div class="testimonial-role en-text">Feedback after workshop (Grade 9)</div>
-    </div>
-    <div class="testimonial-card">
-      <p class="testimonial-quote de-text">„Die Jungs reden danach noch wochenlang über den Workshop. Das passiert nicht oft."</p>
-      <p class="testimonial-quote en-text">"The boys were still talking about the workshop weeks later. That doesn't happen often."</p>
-      <div class="testimonial-author de-text">Sozialpädagogin, Jugendzentrum NRW</div>
-      <div class="testimonial-author en-text">Social Educator, Youth Center NRW</div>
-      <div class="testimonial-role de-text">Workshop: Männlichkeit & Identität</div>
-      <div class="testimonial-role en-text">Workshop: Masculinity & Identity</div>
-    </div>
-    <div class="testimonial-card">
-      <p class="testimonial-quote de-text">„Professionell, empathisch und immer auf Augenhöhe. Wir buchen Bashar regelmäßig."</p>
-      <p class="testimonial-quote en-text">"Professional, empathetic and always on equal footing. We book Bashar regularly."</p>
-      <div class="testimonial-author de-text">Schulleitung, Oberhausen</div>
-      <div class="testimonial-author en-text">School Principal, Oberhausen</div>
-      <div class="testimonial-role de-text">Langfristige Zusammenarbeit seit 2021</div>
-      <div class="testimonial-role en-text">Ongoing collaboration since 2021</div>
-    </div>
-  </div>
-</section>
+<dialog class="lb" id="lb">
+  <button class="lb-close" type="button" aria-label="Close" onclick="document.getElementById('lb').close()">×</button>
+  <img id="lb-img" alt="">
+</dialog>
 
-<!-- BOOKING FORM -->
-<section class="booking-section" id="booking">
-  <p class="section-tag de-text">Workshop anfragen</p>
-  <p class="section-tag en-text">Book a Workshop</p>
-  <h2 class="section-title">
-    <span class="de-text">Bringen wir Ihr Projekt ins Rollen</span>
-    <span class="en-text">Let's get your project started</span>
-  </h2>
-
-  <div class="booking-grid">
-    <div class="booking-info">
-      <h3 class="de-text">So läuft eine Buchung ab</h3>
-      <h3 class="en-text">How booking works</h3>
-      <p class="de-text">Füllen Sie das Formular aus – ich melde mich innerhalb von 48 Stunden bei Ihnen. Wir besprechen Ihre Zielgruppe, die passenden Themen und den Rahmen. Dann planen wir gemeinsam.</p>
-      <p class="en-text">Fill in the form — I'll get back to you within 48 hours. We discuss your target group, the right topics and the format. Then we plan together.</p>
-      <div class="contact-line">
-        <div class="contact-icon">✉️</div>
-        <span>Basharahmed.duis@gmail.com</span>
+<section id="booking" class="booking">
+  <div class="wrap">
+    <p class="eyebrow" data-t="book_eyebrow"></p>
+    <h2 class="h2" data-th="book_h2"></h2>
+    <div class="book-grid">
+      <div class="book-info">
+        <h3 data-t="book_h3"></h3>
+        <p data-t="book_p"></p>
+        <ul class="contact">
+          <li><span data-t="c_mail"></span><b>Basharahmed.duis@gmail.com</b></li>
+          <li><span data-t="c_phone"></span><b>+49 1578 1555 131</b></li>
+          <li><span data-t="c_addr"></span><b>Stifterstr. 2, 47167 Duisburg</b></li>
+        </ul>
       </div>
-      <div class="contact-line">
-        <div class="contact-icon">📞</div>
-        <span>+49 1578 1555 131</span>
-      </div>
-      <div class="contact-line">
-        <div class="contact-icon">📍</div>
-        <span>Stifterstr. 2, 47167 Duisburg</span>
-      </div>
-    </div>
-
-    <div class="booking-form">
-      <div class="form-title de-text">Workshop-Anfrage</div>
-      <div class="form-title en-text">Workshop Inquiry</div>
-      <div class="form-subtitle de-text">Alle Felder mit * sind Pflichtfelder.</div>
-      <div class="form-subtitle en-text">All fields marked * are required.</div>
-
-      <div class="form-row">
-        <div class="form-group">
-          <label class="de-text">Vorname *</label>
-          <label class="en-text">First Name *</label>
-          <input type="text" placeholder="Maria" />
+      <form class="form" id="form" novalidate>
+        <h3 data-t="f_title"></h3>
+        <p class="sub" data-t="f_sub"></p>
+        <div class="row">
+          <div class="field"><label for="f-first" data-t="f_first"></label><input id="f-first" name="first" required placeholder="Maria"></div>
+          <div class="field"><label for="f-last" data-t="f_last"></label><input id="f-last" name="last" required placeholder="Müller"></div>
         </div>
-        <div class="form-group">
-          <label class="de-text">Nachname *</label>
-          <label class="en-text">Last Name *</label>
-          <input type="text" placeholder="Müller" />
+        <div class="field"><label for="f-mail" data-t="f_mail"></label><input id="f-mail" name="mail" type="email" required placeholder="maria.mueller@schule.de" dir="ltr"></div>
+        <div class="field"><label for="f-org" data-t="f_org"></label><input id="f-org" name="org" required placeholder="Gesamtschule Duisburg"></div>
+        <div class="row">
+          <div class="field"><label for="f-group" data-t="f_group"></label><select id="f-group" name="group" required data-opts="group"></select></div>
+          <div class="field"><label for="f-size" data-t="f_size"></label><select id="f-size" name="size"><option>10–20</option><option>20–30</option><option>30–50</option><option>50+</option></select></div>
         </div>
-      </div>
-
-      <div class="form-group">
-        <label class="de-text">E-Mail-Adresse *</label>
-        <label class="en-text">Email Address *</label>
-        <input type="email" placeholder="maria.mueller@schule.de" />
-      </div>
-
-      <div class="form-group">
-        <label class="de-text">Name der Schule / Institution *</label>
-        <label class="en-text">School / Institution Name *</label>
-        <input type="text" placeholder="Gesamtschule Duisburg" />
-      </div>
-
-      <div class="form-row">
-        <div class="form-group">
-          <label class="de-text">Zielgruppe / Klasse *</label>
-          <label class="en-text">Target Group / Grade *</label>
-          <select>
-            <option value="" class="de-text">Bitte wählen</option>
-            <option value="" class="en-text">Please select</option>
-            <option>Klasse 5–7 / Grades 5–7</option>
-            <option>Klasse 8–10 / Grades 8–10</option>
-            <option>Klasse 11–13 / Grades 11–13</option>
-            <option class="de-text">Lehrkräfte / Fachpersonal</option>
-            <option class="en-text">Teachers / Professionals</option>
-            <option class="de-text">Gemischte Gruppe</option>
-            <option class="en-text">Mixed Group</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label class="de-text">Erwartete Teilnehmerzahl</label>
-          <label class="en-text">Expected Number of Participants</label>
-          <select>
-            <option>10–20</option>
-            <option>20–30</option>
-            <option>30–50</option>
-            <option>50+</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label class="de-text">Gewünschtes Thema *</label>
-        <label class="en-text">Desired Topic *</label>
-        <select>
-          <option class="de-text">Unterdrückung im Namen der Ehre</option>
-          <option class="en-text">Honor-Based Oppression</option>
-          <option class="de-text">Männlichkeit & Geschlechterrollen</option>
-          <option class="en-text">Masculinity & Gender Roles</option>
-          <option class="de-text">Identität, Kultur & Zugehörigkeit</option>
-          <option class="en-text">Identity, Culture & Belonging</option>
-          <option class="de-text">Gewaltprävention</option>
-          <option class="en-text">Violence Prevention</option>
-          <option class="de-text">Respekt & Menschenwürde</option>
-          <option class="en-text">Respect & Human Dignity</option>
-          <option class="de-text">Lehrkräfte-Fortbildung</option>
-          <option class="en-text">Teacher Training</option>
-          <option class="de-text">Noch nicht sicher / Beratung gewünscht</option>
-          <option class="en-text">Not sure yet / Need advice</option>
-        </select>
-      </div>
-
-      <div class="form-group">
-        <label class="de-text">Gewünschter Zeitraum</label>
-        <label class="en-text">Preferred Timeframe</label>
-        <input type="text" placeholder="z.B. März 2026, flexibel / e.g. March 2026, flexible" />
-      </div>
-
-      <div class="form-group">
-        <label class="de-text">Ihre Nachricht / Kontext *</label>
-        <label class="en-text">Your Message / Context *</label>
-        <textarea placeholder="Was ist der Anlass? Gibt es spezifische Herausforderungen in Ihrer Klasse oder Institution, die ich kennen sollte? / What's the occasion? Are there specific challenges in your class or institution I should know about?"></textarea>
-      </div>
-
-      <button class="form-submit de-text">Anfrage senden →</button>
-      <button class="form-submit en-text">Send Inquiry →</button>
+        <div class="field"><label for="f-topic" data-t="f_topic"></label><select id="f-topic" name="topic" required data-opts="topic"></select></div>
+        <div class="field"><label for="f-when" data-t="f_when"></label><input id="f-when" name="when" data-ph="ph_when"></div>
+        <div class="field"><label for="f-msg" data-t="f_msg"></label><textarea id="f-msg" name="msg" required data-ph="ph_msg"></textarea></div>
+        <button class="btn" type="submit"><span data-t="f_submit"></span><span class="arr">→</span></button>
+        <div class="done" id="done" hidden></div>
+      </form>
     </div>
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
-  <div class="footer-logo">Bashar Ahmed</div>
-  <div class="footer-copy">© 2026 Bashar Ahmed. <span class="de-text">Alle Rechte vorbehalten.</span><span class="en-text">All rights reserved.</span></div>
-  <div class="footer-links">
-    <a href="mailto:Basharahmed.duis@gmail.com">Email</a>
-    <a href="tel:+4915781555131">Tel</a>
+  <div class="wrap">
+    <div class="footer-big" aria-hidden="true">Bashar <span>Ahmed</span></div>
+    <div class="footer-row">
+      <span>© 2026 Bashar Ahmed. <span data-t="rights"></span></span>
+      <nav><a href="mailto:Basharahmed.duis@gmail.com">E-Mail</a><a href="tel:+4915781555131">Tel</a><a href="#top">↑ <span data-t="top"></span></a></nav>
+    </div>
   </div>
 </footer>
 
 <script>
-  function setLang(lang) {
-    document.body.className = lang === 'en' ? 'lang-en' : '';
-    document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
-    document.querySelector(`.lang-btn[onclick="setLang('${lang}')"]`).classList.add('active');
+const T = {
+de: {
+  nav_about: "Über mich", nav_ws: "Workshops", nav_stage: "Bühne", nav_gal: "Einblicke", nav_book: "Anfrage",
+  hero_eyebrow: "Duisburg, NRW · Seit 2016",
+  hero_l1: "Bildung,", hero_l2a: "die", hero_l2b: "wirklich", hero_l3: "bewegt.",
+  hero_sub: "Ich begleite junge Menschen dabei, schädliche Normen zu hinterfragen, ihre Identität zu stärken und gewaltfreie Perspektiven zu entwickeln – durch offene Gespräche, echte Begegnung und nachhaltige Bildungsarbeit.",
+  stat_years: "Jahre Erfahrung", stat_ws: "Workshops", stat_voices: "Junge Stimmen",
+  cta_book: "Workshop anfragen", cta_topics: "Meine Themen",
+  medal: "Träger der Mevlüde-Genç-Medaille · NRW", name: "Bashar Ahmed", name_cite: "— Bashar Ahmed",
+  role: "Workshop-Leiter · Speaker · Sozialarbeiter",
+  ticker: ["Ehre ist keine Kontrolle", "Respekt", "Gewaltprävention", "Identität", "Gesunde Männlichkeit", "Dialog auf Augenhöhe", "Gleichberechtigung"],
+  about_eyebrow: "Über mich",
+  about_h2: "Mehr als ein Workshop. <em>Eine Begegnung.</em>",
+  about_p1: "Ich bin Bashar Ahmed – <strong>Workshop-Leiter, Speaker und Sozialarbeiter</strong> aus Duisburg. Seit über acht Jahren arbeite ich mit jungen Menschen an Schulen, Jugendeinrichtungen und Institutionen in NRW und darüber hinaus.",
+  about_p2: "Meine Kernthemen sind <strong>Unterdrückung im Namen der Ehre, toxische Männlichkeit, Identität und Gewaltprävention</strong>. Ich schaffe Räume, in denen junge Menschen ehrlich sprechen können – ohne Angst, ohne Urteil.",
+  about_p3: "Aus mehr als 600 Workshops weiß ich: <strong>Echter Wandel entsteht, wenn junge Menschen sich gesehen, gehört und ernst genommen fühlen.</strong> Das ist das Herzstück meiner Arbeit.",
+  values: ["Dialog auf Augenhöhe – keine Belehrung, sondern echtes Gespräch", "Empathie als Methode – Gefühle sind Ausgangspunkte, keine Schwäche", "Nachhaltigkeit – Impulse, die über den Workshop hinauswirken", "Kulturelle Kompetenz – mit Respekt für Hintergrund und Herkunft"],
+  quote: "„Echter Wandel beginnt, wenn junge Menschen sich gesehen, gehört und ernst genommen fühlen.“",
+  chip_medal: "Mevlüde-Genç-Medaille", chip_school: "Kurt-Tucholsky-Schule",
+  ws_eyebrow: "Workshop-Themen", ws_h2: "Was ich in Ihre <em>Schule</em> bringe",
+  ws_lede: "Alle Workshops sind interaktiv, altersgerecht und auf Ihre Klasse oder Gruppe abgestimmt. Ich arbeite mit Theaterpädagogik, Gruppenreflexion, Rollenspielen und Fallanalysen – Methoden, die wirklich ankommen.",
+  ws: [
+    ["Ehre", "Unterdrückung im Namen der Ehre", "Wir untersuchen gemeinsam, wie „Ehre“ als Kontroll- und Machtinstrument eingesetzt wird – und was das für junge Menschen, besonders Mädchen und Frauen, bedeutet. Sensibel, respektvoll, aufklärend.", ["Fallanalyse", "Diskussion", "Rollenspiel"]],
+    ["Männlichkeit", "Männlichkeit & Geschlechterrollen", "Was bedeutet es, heute ein Mann zu sein? Wir hinterfragen toxische Bilder von Stärke und schaffen Raum für eine neue, gesunde Männlichkeit, die auf Respekt und Selbstverantwortung basiert.", ["Theaterpädagogik", "Reflexion"]],
+    ["Identität", "Identität, Kultur & Zugehörigkeit", "Zwischen Herkunft und Gegenwart: Junge Menschen mit Migrationshintergrund navigieren oft mehrere Identitäten. Dieser Workshop stärkt das Selbstbild und fördert kulturellen Dialog.", ["Biographiearbeit", "Gruppenarbeit"]],
+    ["Gewaltprävention", "Gewaltprävention & gewaltfreie Kommunikation", "Konflikte gehören zum Leben – wie wir damit umgehen, macht den Unterschied. Praktische Werkzeuge für Deeskalation und respektvolle Kommunikation, direkt anwendbar im Schulalltag.", ["GFK-Methode", "Rollenspiel", "Übungen"]],
+    ["Menschenwürde", "Respekt, Gleichberechtigung & Menschenwürde", "Warum haben alle Menschen den gleichen Wert – unabhängig von Geschlecht, Herkunft oder Religion? Ein Workshop, der Grundwerte lebendig macht und in die gelebte Realität überträgt.", ["Wertereflexion", "Diskussion"]],
+    ["Für Fachkräfte", "Für Lehrkräfte & pädagogische Fachkräfte", "Wie erkenne ich Anzeichen von Ehrgewalt oder häuslicher Gewalt? Wie spreche ich Schüler*innen an? Fort- und Weiterbildung für Lehr- und Fachkräfte, die handlungssicher werden wollen.", ["Fortbildung", "Praxistransfer"]]
+  ],
+  stage_eyebrow: "Auf der Bühne", stage_h2: "Die Stimme erheben <em>gegen Gewalt</em>",
+  hl_eyebrow: "Referenzen & Auszeichnungen", hl_h2: "Vertrauen, <em>das wächst</em>",
+  hl: [
+    ["Auszeichnung · NRW", "Mevlüde-Genç-Medaille", "Ausgezeichnet vom Land NRW für besondere Verdienste um Toleranz und Versöhnung der Kulturen und Religionen – überreicht durch Ministerpräsident Armin Laschet."],
+    ["TV", "WDR", "Der WDR hat einen Dokumentarfilm über HeRoes Duisburg gedreht."],
+    ["Schule", "Kurt-Tucholsky-Schule", "Fortbildung für Lehrkräfte und pädagogische Fachkräfte – praxisnah und nachhaltig."],
+    ["Sport", "Arminia Bielefeld U17", "Workshop mit dem Nachwuchsteam von Arminia Bielefeld – Respekt, Teamgeist und gesunde Männlichkeit im Leistungssport."]
+  ],
+  gal_eyebrow: "Einblicke", gal_h2: "Vor Ort. <em>Im Gespräch.</em>",
+  book_eyebrow: "Workshop anfragen", book_h2: "Bringen wir Ihr Projekt <em>ins Rollen</em>",
+  book_h3: "So läuft eine Buchung ab",
+  book_p: "Füllen Sie das Formular aus – ich melde mich innerhalb von 48 Stunden bei Ihnen. Wir besprechen Ihre Zielgruppe, die passenden Themen und den Rahmen. Dann planen wir gemeinsam.",
+  c_mail: "E-Mail", c_phone: "Telefon", c_addr: "Adresse",
+  f_title: "Workshop-Anfrage", f_sub: "Alle Felder mit * sind Pflichtfelder.",
+  f_first: "Vorname *", f_last: "Nachname *", f_mail: "E-Mail-Adresse *", f_org: "Name der Schule / Institution *",
+  f_group: "Zielgruppe / Klasse *", f_size: "Erwartete Teilnehmerzahl", f_topic: "Gewünschtes Thema *",
+  f_when: "Gewünschter Zeitraum", f_msg: "Ihre Nachricht / Kontext *", f_submit: "Anfrage senden",
+  ph_when: "z. B. März 2026, flexibel",
+  ph_msg: "Was ist der Anlass? Gibt es spezifische Herausforderungen in Ihrer Klasse oder Institution, die ich kennen sollte?",
+  group: ["Bitte wählen", "Klasse 5–7", "Klasse 8–10", "Klasse 11–13", "Lehrkräfte / Fachpersonal", "Gemischte Gruppe"],
+  topic: ["Unterdrückung im Namen der Ehre", "Männlichkeit & Geschlechterrollen", "Identität, Kultur & Zugehörigkeit", "Gewaltprävention", "Respekt & Menschenwürde", "Lehrkräfte-Fortbildung", "Noch nicht sicher / Beratung gewünscht"],
+  err: "Bitte füllen Sie die markierten Pflichtfelder aus.",
+  done: "Ihre Anfrage ist vorbereitet.", done_link: "In Ihrem E-Mail-Programm öffnen →",
+  done_small: "Falls sich nichts öffnet: bitte direkt an Basharahmed.duis@gmail.com schreiben.",
+  m_subject: "Workshop-Anfrage", m_group: "Zielgruppe", m_size: "Teilnehmer", m_topic: "Thema", m_when: "Zeitraum",
+  rights: "Alle Rechte vorbehalten.", top: "Nach oben"
+},
+en: {
+  nav_about: "About", nav_ws: "Workshops", nav_stage: "Stage", nav_gal: "Gallery", nav_book: "Book",
+  hero_eyebrow: "Duisburg, NRW · Since 2016",
+  hero_l1: "Education", hero_l2a: "that", hero_l2b: "truly", hero_l3: "moves.",
+  hero_sub: "I support young people in questioning harmful norms, building their identity, and developing non-violent perspectives — through open dialogue, genuine connection, and lasting educational work.",
+  stat_years: "Years experience", stat_ws: "Workshops", stat_voices: "Young voices",
+  cta_book: "Book a workshop", cta_topics: "My topics",
+  medal: "Mevlüde-Genç Medal recipient · NRW", name: "Bashar Ahmed", name_cite: "— Bashar Ahmed",
+  role: "Workshop leader · Speaker · Social worker",
+  ticker: ["Honor is not control", "Respect", "Violence prevention", "Identity", "Healthy masculinity", "Dialogue on equal terms", "Equality"],
+  about_eyebrow: "About me",
+  about_h2: "More than a workshop. <em>A real encounter.</em>",
+  about_p1: "I'm Bashar Ahmed — <strong>workshop leader, speaker and social worker</strong> from Duisburg. For over eight years, I've been working with young people in schools, youth organizations and institutions across NRW and beyond.",
+  about_p2: "My core topics are <strong>honor-based oppression, toxic masculinity, identity and violence prevention</strong>. I create spaces where young people can speak honestly — without fear, without judgment.",
+  about_p3: "With more than 600 workshops under my belt, I've learned one thing above all: <strong>real change happens when young people feel seen, heard and taken seriously.</strong> That is the heart of my work.",
+  values: ["Dialogue on equal terms — not lecturing, but genuine conversation", "Empathy as method — feelings are starting points, not weakness", "Sustainability — impulses that go beyond the workshop itself", "Cultural competence — with respect for background and origin"],
+  quote: "“Real change begins when young people feel seen, heard, and taken seriously.”",
+  chip_medal: "Mevlüde-Genç Medal", chip_school: "Kurt-Tucholsky School",
+  ws_eyebrow: "Workshop topics", ws_h2: "What I bring to your <em>school</em>",
+  ws_lede: "All workshops are interactive, age-appropriate and tailored to your class or group. I work with drama pedagogy, group reflection, role play and case analysis — methods that truly resonate.",
+  ws: [
+    ["Honor", "Honor-based oppression", "We explore together how “honor” is used as a tool of control — and what this means for young people, especially girls and women. Sensitive, respectful, enlightening.", ["Case analysis", "Discussion", "Role play"]],
+    ["Masculinity", "Masculinity & gender roles", "What does it mean to be a man today? We challenge toxic images of strength and create space for a healthy masculinity grounded in respect and self-responsibility.", ["Drama pedagogy", "Reflection"]],
+    ["Identity", "Identity, culture & belonging", "Between roots and reality: young people with migration backgrounds often navigate multiple identities. This workshop strengthens self-image and fosters cultural dialogue.", ["Biography work", "Group work"]],
+    ["Prevention", "Violence prevention & non-violent communication", "Conflict is part of life — how we handle it makes all the difference. Practical tools for de-escalation and respectful communication, directly applicable in everyday school life.", ["NVC method", "Role play", "Exercises"]],
+    ["Dignity", "Respect, equality & human dignity", "Why does every person have equal worth — regardless of gender, origin or religion? A workshop that brings core values to life and translates them into lived reality.", ["Value reflection", "Discussion"]],
+    ["For professionals", "For teachers & education professionals", "How do I recognize signs of honor-based or domestic violence? How do I approach students? Professional development for educators who want to feel confident and prepared to act.", ["Training", "Practice transfer"]]
+  ],
+  stage_eyebrow: "On stage", stage_h2: "Speaking up <em>against violence</em>",
+  hl_eyebrow: "References & recognition", hl_h2: "Trust <em>that grows</em>",
+  hl: [
+    ["Award · NRW", "Mevlüde-Genç Medal", "Awarded by the State of NRW for outstanding contributions to tolerance and reconciliation between cultures and religions — presented by Minister President Armin Laschet."],
+    ["TV", "WDR", "A WDR documentary film about HeRoes Duisburg."],
+    ["School", "Kurt-Tucholsky School", "Delivered a professional development workshop for teaching and educational staff — practical and lasting in impact."],
+    ["Sport", "Arminia Bielefeld U17", "Workshop with the youth team of Arminia Bielefeld — respect, team spirit and healthy masculinity in professional sport."]
+  ],
+  gal_eyebrow: "Gallery", gal_h2: "On site. <em>In dialogue.</em>",
+  book_eyebrow: "Book a workshop", book_h2: "Let's get your project <em>started</em>",
+  book_h3: "How booking works",
+  book_p: "Fill in the form — I'll get back to you within 48 hours. We discuss your target group, the right topics and the format. Then we plan together.",
+  c_mail: "Email", c_phone: "Phone", c_addr: "Address",
+  f_title: "Workshop inquiry", f_sub: "All fields marked * are required.",
+  f_first: "First name *", f_last: "Last name *", f_mail: "Email address *", f_org: "School / institution name *",
+  f_group: "Target group / grade *", f_size: "Expected participants", f_topic: "Desired topic *",
+  f_when: "Preferred timeframe", f_msg: "Your message / context *", f_submit: "Send inquiry",
+  ph_when: "e.g. March 2026, flexible",
+  ph_msg: "What's the occasion? Are there specific challenges in your class or institution I should know about?",
+  group: ["Please select", "Grades 5–7", "Grades 8–10", "Grades 11–13", "Teachers / professionals", "Mixed group"],
+  topic: ["Honor-based oppression", "Masculinity & gender roles", "Identity, culture & belonging", "Violence prevention", "Respect & human dignity", "Teacher training", "Not sure yet / need advice"],
+  err: "Please fill in the highlighted required fields.",
+  done: "Your inquiry is ready.", done_link: "Open it in your email app →",
+  done_small: "If nothing opens, please write directly to Basharahmed.duis@gmail.com.",
+  m_subject: "Workshop inquiry", m_group: "Group", m_size: "Participants", m_topic: "Topic", m_when: "Timeframe",
+  rights: "All rights reserved.", top: "Top"
+},
+ku: {
+  nav_about: "Ez kî me", nav_ws: "Komxebat", nav_stage: "Li ser dikê", nav_gal: "Wêne", nav_book: "Daxwaz",
+  hero_eyebrow: "Duisburg, NRW · Ji sala 2016an ve",
+  hero_l1: "Perwerdeya", hero_l2a: "ku", hero_l2b: "jiyanê", hero_l3: "diguherîne.",
+  hero_sub: "Ez bi ciwanan re dimeşim: da ku ew nêrînên zirardar bipirsin, nasnameya xwe xurt bikin û rêyên bêtundî bibînin – bi axaftina vekirî, hevdîtina rastîn û xebata perwerdeyî ya mayînde.",
+  stat_years: "Sal tecrûbe", stat_ws: "Komxebat", stat_voices: "Dengên ciwan",
+  cta_book: "Komxebatekê bixwaze", cta_topics: "Mijarên min",
+  medal: "Xwediyê Madalyaya Mevlüde Genç · NRW", name: "Bashar Ahmed", name_cite: "— Bashar Ahmed",
+  role: "Rêberê komxebatan · Axêver · Karmendê civakî",
+  ticker: ["Jin, Jiyan, Azadî", "Namûs ne kontrol e", "Rêz", "Na ji tundiyê re", "Nasname", "Mêraniya saxlem", "Wekhevî"],
+  about_eyebrow: "Ez kî me",
+  about_h2: "Ne tenê komxebatek. <em>Hevdîtinek.</em>",
+  about_p1: "Ez Bashar Ahmed im – <strong>rêberê komxebatan, axêver û karmendê civakî</strong> li Duisburgê. Zêdetirî heşt salan e ez li dibistan, navendên ciwanan û saziyan, li NRWê û derveyî wê, bi ciwanan re dixebitim.",
+  about_p2: "Mijarên min ên sereke <strong>zordariya bi navê namûsê, mêraniya jehrî, nasname û pêşîgirtina li tundiyê</strong> ne. Ez cihekî ava dikim ku ciwan tê de bi dilekî vekirî biaxivin – bê tirs û bê darizandin.",
+  about_p3: "Piştî zêdetirî 600 komxebatan ez bi vê bawer im: <strong>guhertina rastîn wê demê dest pê dike, dema ciwan hîs dikin ku ew têne dîtin, guh li wan tê girtin û ew bi ciddî têne wergirtin.</strong> Dilê karê min ev e.",
+  values: ["Diyaloga wekhev – ne şîret, axaftina rastîn", "Empatî wek rêbaz – hest ne qelsî ne, xala destpêkê ne", "Mayîndebûn – bandora ku piştî komxebatê jî berdewam dike", "Têgihiştina çandî – bi rêzgirtina li paşxane û esl"],
+  quote: "„Guhertina rastîn wê demê dest pê dike, dema ciwan hîs dikin ku ew têne dîtin, guh li wan tê girtin û ew bi ciddî têne wergirtin.“",
+  chip_medal: "Madalyaya Mevlüde Genç", chip_school: "Dibistana Kurt Tucholsky",
+  ws_eyebrow: "Mijarên komxebatan", ws_h2: "Ez çi tînim <em>dibistana we</em>",
+  ws_lede: "Hemû komxebat înteraktîf in, li gorî temenê beşdaran in û li gorî pol an koma we têne amadekirin. Ez bi şanoya perwerdeyî, nîqaşên komî, lîstikên rolan û xebata li ser mînakên rastîn dixebitim – rêbazên ku digihîjin dilê ciwanan.",
+  ws: [
+    ["Namûs", "Zordarî bi navê namûsê", "Em bi hev re li ser vê yekê dixebitin ka „namûs“ çawa dibe amûra kontrol û desthilatê – û ev ji bo ciwanan, bi taybetî ji bo keç û jinan, tê çi wateyê. Bi hestiyarî, bi rêz û bi zelalî.", ["Mînakên rastîn", "Nîqaş", "Lîstika rolan"]],
+    ["Mêranî", "Mêranî û rolên zayendî", "Îro mêr bûn tê çi wateyê? Em wêneyên jehrî yên „hêzê“ dipirsin û cih ji mêraniyeke saxlem re vedikin ku li ser rêz û berpirsiyariyê ava dibe.", ["Şanoya perwerdeyî", "Ramana komî"]],
+    ["Nasname", "Nasname, çand û aîdiyet", "Di navbera welatê dê û bavan û jiyana li vir de: gelek ciwan bi çend nasnameyan re dijîn. Ev komxebat baweriya bi xwe xurt dike û diyaloga di navbera çandan de pêş dixe.", ["Çîroka jiyanê", "Xebata komî"]],
+    ["Pêşîgirtin", "Pêşîgirtina li tundiyê û axaftina bêtundî", "Nakokî beşek ji jiyanê ne – awayê ku em bi wan re tevdigerin ferqê çêdike. Amûrên pratîkî ji bo aramkirina nakokiyan û axaftina bi rêz, ku rasterast di jiyana dibistanê de têne bikaranîn.", ["Axaftina bêtundî (NVC)", "Lîstika rolan", "Rahênan"]],
+    ["Rûmet", "Rêz, wekhevî û rûmeta mirov", "Çima nirxê hemû mirovan wekhev e – bêyî ferqa zayend, esl an olê? Komxebatek ku nirxên bingehîn zindî dike û wan dixe nav jiyana rojane.", ["Ramana li ser nirxan", "Nîqaş"]],
+    ["Ji bo pisporan", "Ji bo mamoste û karmendên perwerdeyê", "Ez çawa nîşanên tundiya bi navê namûsê an tundiya malbatî nas bikim? Ez çawa bi xwendekaran re biaxivim? Perwerdeya pîşeyî ji bo mamoste û pisporên ku dixwazin bi ewlehî tevbigerin.", ["Perwerdeya pîşeyî", "Ji teoriyê ber bi pratîkê"]]
+  ],
+  stage_eyebrow: "Li ser dikê", stage_h2: "Dengê xwe bilind bike <em>li dijî tundiyê</em>",
+  hl_eyebrow: "Referans û xelat", hl_h2: "Baweriya ku <em>mezin dibe</em>",
+  hl: [
+    ["Xelat · NRW", "Madalyaya Mevlüde Genç", "Ji aliyê eyaleta NRWê ve ji bo keda taybet di warê lihevkirin û toleransa di navbera çand û olan de hat dayîn – ji destê serokwezîr Armin Laschet."],
+    ["TV", "WDR", "Belgefîlmeke WDRê li ser HeRoes Duisburg."],
+    ["Dibistan", "Dibistana Kurt Tucholsky", "Perwerdeyeke pîşeyî ji bo mamoste û karmendên perwerdeyê – pratîkî û mayînde."],
+    ["Werziş", "Arminia Bielefeld U17", "Komxebat bi tîma ciwanan a Arminia Bielefeld re – rêz, ruhê tîmê û mêraniya saxlem di werzişa profesyonel de."]
+  ],
+  gal_eyebrow: "Wêne", gal_h2: "Li qadê. <em>Di nava diyalogê de.</em>",
+  book_eyebrow: "Komxebatekê bixwaze", book_h2: "Em projeya we <em>bi hev re dest pê bikin</em>",
+  book_h3: "Daxwaz çawa dimeşe",
+  book_p: "Formê tije bikin – ez ê di nav 48 saetan de vegerim we. Em li ser koma armanc, mijarên guncav û çarçoveyê diaxivin, paşê em bi hev re plan dikin.",
+  c_mail: "E-name", c_phone: "Telefon", c_addr: "Navnîşan",
+  f_title: "Daxwaza komxebatê", f_sub: "Qadên bi * nîşankirî mecbûrî ne.",
+  f_first: "Nav *", f_last: "Paşnav *", f_mail: "E-name *", f_org: "Navê dibistanê / saziyê *",
+  f_group: "Koma armanc / pol *", f_size: "Hejmara beşdaran", f_topic: "Mijar *",
+  f_when: "Dema ku hûn dixwazin", f_msg: "Peyama we *", f_submit: "Daxwazê bişîne",
+  ph_when: "mînak: Adar 2026, guherbar",
+  ph_msg: "Sedem çi ye? Gelo di pol an saziya we de pirsgirêkên taybet hene ku divê ez bizanim?",
+  group: ["Hilbijêre", "Pola 5–7", "Pola 8–10", "Pola 11–13", "Mamoste / pispor", "Koma tevlihev"],
+  topic: ["Zordarî bi navê namûsê", "Mêranî û rolên zayendî", "Nasname, çand û aîdiyet", "Pêşîgirtina li tundiyê", "Rêz û rûmeta mirov", "Perwerdeya mamosteyan", "Hê ne diyar e / şêwirmendî dixwazim"],
+  err: "Ji kerema xwe qadên mecbûrî yên nîşankirî tije bikin.",
+  done: "Daxwaza we amade ye.", done_link: "Di bernameya e-nameyê de veke →",
+  done_small: "Heke tiştek venebe, ji kerema xwe rasterast ji Basharahmed.duis@gmail.com re binivîsin.",
+  m_subject: "Daxwaza komxebatê", m_group: "Koma armanc", m_size: "Beşdar", m_topic: "Mijar", m_when: "Dem",
+  rights: "Hemû maf parastî ne.", top: "Jor"
+},
+ar: {
+  nav_about: "من أنا", nav_ws: "الورش", nav_stage: "على المنصّة", nav_gal: "صور", nav_book: "احجز ورشة",
+  hero_eyebrow: "دويسبورغ، ألمانيا · منذ 2016",
+  hero_l1: "تعليمٌ", hero_l2a: "يصنع", hero_l2b: "الفرق", hero_l3: "فعلًا.",
+  hero_sub: "أرافق الشباب ليتساءلوا عن الأعراف المؤذية، ويقوّوا هويتهم، ويجدوا طرقًا بعيدة عن العنف – من خلال حوار مفتوح ولقاء حقيقي وعمل تربوي يترك أثرًا.",
+  stat_years: "سنوات خبرة", stat_ws: "ورشة", stat_voices: "صوت شاب",
+  cta_book: "احجز ورشة", cta_topics: "مواضيعي",
+  medal: "حائز على وسام مَفلودة غَنتش · ولاية شمال الراين-وستفاليا", name: "بشار أحمد", name_cite: "— بشار أحمد",
+  role: "مدرّب ورش · متحدّث · أخصائي اجتماعي",
+  ticker: ["الشرف مش سيطرة", "الاحترام", "لا للعنف", "الهوية", "ذكورة إيجابية", "صوتك مسموع", "المساواة"],
+  about_eyebrow: "من أنا",
+  about_h2: "أكثر من ورشة. <em>لقاءٌ حقيقي.</em>",
+  about_p1: "أنا بشار أحمد – <strong>مدرّب ورش ومتحدّث وأخصائي اجتماعي</strong> مقيم في دويسبورغ. منذ أكثر من ثماني سنوات أعمل مع الشباب في المدارس ومراكز الشباب والمؤسسات في ولاية شمال الراين-وستفاليا وخارجها.",
+  about_p2: "أعمل على مواضيع <strong>القمع باسم الشرف، والذكورة السامّة، والهوية، والوقاية من العنف</strong>. أصنع مساحة آمنة يستطيع فيها الشباب أن يتكلّموا بصراحة – بلا خوف وبلا أحكام.",
+  about_p3: "بعد أكثر من 600 ورشة أصبحت متأكدًا من شيء واحد: <strong>التغيير الحقيقي يبدأ عندما يشعر الشباب أن أحدًا يراهم ويسمعهم ويأخذهم على محمل الجد.</strong> وهذا هو قلب عملي.",
+  values: ["حوار ندّي – لا وعظ ولا محاضرات، بل حديث حقيقي", "التعاطف كأسلوب عمل – المشاعر نقطة بداية وليست ضعفًا", "أثر مستدام – أفكار تبقى بعد انتهاء الورشة", "حسّ ثقافي – باحترام الخلفية والأصل"],
+  quote: "«التغيير الحقيقي يبدأ عندما يشعر الشباب أن أحدًا يراهم ويسمعهم ويأخذهم على محمل الجد.»",
+  chip_medal: "وسام مَفلودة غَنتش", chip_school: "مدرسة كورت توخولسكي",
+  ws_eyebrow: "مواضيع الورش", ws_h2: "ماذا أقدّم <em>لمدرستكم</em>",
+  ws_lede: "كل الورش تفاعلية ومناسبة لعمر المشاركين ومصمّمة حسب صفّكم أو مجموعتكم. أستخدم المسرح التفاعلي والنقاش الجماعي ولعب الأدوار ودراسة حالات واقعية – أساليب تصل إلى الشباب فعلًا.",
+  ws: [
+    ["الشرف", "القمع باسم الشرف", "نناقش معًا كيف يتحوّل «الشرف» إلى أداة للسيطرة والتحكّم – وماذا يعني ذلك للشباب، وخصوصًا للفتيات والنساء. بحساسية واحترام ووضوح.", ["حالات واقعية", "نقاش", "لعب أدوار"]],
+    ["الذكورة", "الذكورة والأدوار الجندرية", "ماذا يعني أن تكون رجلًا اليوم؟ نُعيد النظر في صور «القوة» السامّة، ونفتح المجال لذكورة إيجابية تقوم على الاحترام وتحمّل المسؤولية.", ["مسرح تفاعلي", "تأمّل جماعي"]],
+    ["الهوية", "الهوية والثقافة والانتماء", "بين ثقافة الأهل والحياة هنا: كثير من الشباب يعيشون بين أكثر من هوية. هذه الورشة تقوّي الثقة بالنفس وتفتح باب الحوار بين الثقافات.", ["قصص الحياة", "عمل جماعي"]],
+    ["الوقاية", "الوقاية من العنف والتواصل اللاعنفي", "الخلافات جزء من الحياة – والفرق في طريقة التعامل معها. أدوات عملية لتهدئة النزاعات والتواصل باحترام، يمكن تطبيقها مباشرة في الحياة المدرسية.", ["التواصل اللاعنفي", "لعب أدوار", "تمارين"]],
+    ["الكرامة", "الاحترام والمساواة والكرامة الإنسانية", "لماذا لكل إنسان القيمة نفسها – مهما كان جنسه أو أصله أو دينه؟ ورشة تُحوّل القيم الأساسية من كلمات إلى ممارسة يومية.", ["نقاش القيم", "حوار"]],
+    ["للكوادر التربوية", "للمعلّمين والكوادر التربوية", "كيف أتعرّف على علامات العنف باسم الشرف أو العنف الأسري؟ وكيف أفتح الحديث مع الطلاب؟ تدريب مهني للمعلّمين والمختصّين الذين يريدون التصرّف بثقة.", ["تدريب مهني", "من النظرية إلى التطبيق"]]
+  ],
+  stage_eyebrow: "على المنصّة", stage_h2: "نرفع صوتنا <em>في وجه العنف</em>",
+  hl_eyebrow: "إنجازات وتكريمات", hl_h2: "ثقةٌ <em>تكبر</em>",
+  hl: [
+    ["تكريم · شمال الراين-وستفاليا", "وسام مَفلودة غَنتش", "تكريم من ولاية شمال الراين-وستفاليا لإسهامات مميّزة في التسامح والتقارب بين الثقافات والأديان – سلّمه رئيس وزراء الولاية آنذاك أرمين لاشيت."],
+    ["تلفزيون", "WDR", "فيلم وثائقي على قناة WDR عن مشروع HeRoes Duisburg."],
+    ["مدرسة", "مدرسة كورت توخولسكي", "تدريب مهني للمعلّمين والكوادر التربوية – عملي ومستدام."],
+    ["رياضة", "أرمينيا بيليفيلد U17", "ورشة مع فريق الناشئين في نادي أرمينيا بيليفيلد – الاحترام وروح الفريق والذكورة الإيجابية في الرياضة الاحترافية."]
+  ],
+  gal_eyebrow: "صور", gal_h2: "في الميدان. <em>في الحوار.</em>",
+  book_eyebrow: "احجز ورشة", book_h2: "لنبدأ <em>مشروعكم معًا</em>",
+  book_h3: "كيف يتم الحجز؟",
+  book_p: "املؤوا النموذج وسأردّ عليكم خلال 48 ساعة. نتحدّث عن الفئة المستهدفة والمواضيع المناسبة وشكل الورشة، ثم نخطّط معًا.",
+  c_mail: "البريد الإلكتروني", c_phone: "الهاتف", c_addr: "العنوان",
+  f_title: "طلب ورشة", f_sub: "الحقول المعلَّمة بـ * إلزامية.",
+  f_first: "الاسم *", f_last: "الكنية *", f_mail: "البريد الإلكتروني *", f_org: "اسم المدرسة / المؤسسة *",
+  f_group: "الفئة المستهدفة / الصف *", f_size: "عدد المشاركين المتوقّع", f_topic: "الموضوع *",
+  f_when: "الموعد المفضّل", f_msg: "رسالتكم *", f_submit: "أرسل الطلب",
+  ph_when: "مثلًا: آذار 2026، مرن",
+  ph_msg: "ما المناسبة؟ هل هناك تحدّيات معيّنة في الصف أو المؤسسة يجب أن أعرفها؟",
+  group: ["اختر", "الصفوف 5–7", "الصفوف 8–10", "الصفوف 11–13", "معلّمون / مختصّون", "مجموعة مختلطة"],
+  topic: ["القمع باسم الشرف", "الذكورة والأدوار الجندرية", "الهوية والثقافة والانتماء", "الوقاية من العنف", "الاحترام والكرامة الإنسانية", "تدريب المعلّمين", "لم أقرّر بعد / أحتاج استشارة"],
+  err: "يرجى تعبئة الحقول الإلزامية المحدّدة.",
+  done: "طلبكم جاهز.", done_link: "افتحه في تطبيق البريد ←",
+  done_small: "إذا لم يُفتح شيء، راسلوني مباشرة على Basharahmed.duis@gmail.com.",
+  m_subject: "طلب ورشة", m_group: "الفئة", m_size: "عدد المشاركين", m_topic: "الموضوع", m_when: "الموعد",
+  rights: "جميع الحقوق محفوظة.", top: "للأعلى"
+}
+};
+
+const GALLERY = ["press-1.jpg", "workshop-room.jpg", "wdr.jpg", "stage.jpg", "bellevue.jpg", "workshop-board.jpg", "filmcrew.jpg", "rally-collage.jpg", "team-bielefeld.jpg", "takeover.jpg", "press-2.jpg", "magazine.jpg"];
+let lang = "de";
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+function render() {
+  const L = T[lang];
+  document.documentElement.lang = lang;
+  document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
+  document.querySelectorAll("[data-t]").forEach(el => el.textContent = L[el.dataset.t]);
+  document.querySelectorAll("[data-th]").forEach(el => el.innerHTML = L[el.dataset.th]);
+  document.querySelectorAll("[data-ph]").forEach(el => el.placeholder = L[el.dataset.ph]);
+  document.querySelectorAll("[data-lang]").forEach(b => b.setAttribute("aria-pressed", b.dataset.lang === lang));
+
+  $("values").innerHTML = L.values.map(v => `<li><span>${esc(v)}</span></li>`).join("");
+
+  $("ws-grid").innerHTML = L.ws.map((w, i) => `
+    <article class="ws ws-${i % 3}">
+      <div class="ws-k">${esc(w[0])}</div>
+      <h3>${esc(w[1])}</h3>
+      <p>${esc(w[2])}</p>
+      <div class="tags">${w[3].map(t => `<span>${esc(t)}</span>`).join("")}</div>
+    </article>`).join("");
+
+  $("hl-grid").innerHTML = L.hl.map((h, i) => `
+    <article class="hl-row${i === 0 ? " star" : ""}">
+      <div class="hl-k">${esc(h[0])}</div>
+      <h3>${esc(h[1])}</h3>
+      <p>${esc(h[2])}</p>
+    </article>`).join("");
+
+  const tick = L.ticker.concat(L.ticker).map(w => `<span>${esc(w)}</span>`).join("");
+  $("ticker").innerHTML = tick + tick;
+
+  document.querySelectorAll("select[data-opts]").forEach(sel => {
+    const i = sel.selectedIndex;
+    sel.innerHTML = L[sel.dataset.opts].map((t, k) => `<option${sel.dataset.opts === "group" && k === 0 ? ' value=""' : ""}>${esc(t)}</option>`).join("");
+    sel.selectedIndex = Math.max(0, i);
+  });
+  if (!$("done").hidden) $("done").hidden = true;
+}
+
+function setLang(l) {
+  lang = T[l] ? l : "de";
+  render();
+  try { localStorage.setItem("ba-lang", lang); } catch (e) {}
+}
+document.querySelectorAll("[data-lang]").forEach(b => b.addEventListener("click", () => setLang(b.dataset.lang)));
+
+// gallery (built once)
+GALLERY.forEach((f, i) => {
+  const b = document.createElement("button");
+  b.className = "shot"; b.type = "button"; b.setAttribute("aria-label", "Open image");
+  b.style.setProperty("--tilt", "0deg");
+  b.innerHTML = `<div class="riso ${i % 2 ? "blue" : "pink"}"><img src="media/${f}" alt=""></div>`;
+  b.addEventListener("click", () => { $("lb-img").src = "media/" + f; $("lb").showModal(); });
+  $("gallery-grid").appendChild(b);
+});
+$("lb").addEventListener("click", e => { if (e.target.id === "lb") e.target.close(); });
+
+let saved = "de";
+try { saved = localStorage.getItem("ba-lang") || "de"; } catch (e) {}
+setLang(saved);
+
+const nav = $("nav");
+$("menu-btn").addEventListener("click", () => { const o = nav.classList.toggle("open"); $("menu-btn").setAttribute("aria-expanded", o); });
+document.querySelectorAll("#nav-links a").forEach(a => a.addEventListener("click", () => { nav.classList.remove("open"); $("menu-btn").setAttribute("aria-expanded", "false"); }));
+const onScroll = () => nav.classList.toggle("solid", window.scrollY > 40);
+window.addEventListener("scroll", onScroll, { passive: true }); onScroll();
+
+document.querySelectorAll("[data-vid]").forEach(box => {
+  const v = box.querySelector("video");
+  box.querySelector(".play").addEventListener("click", () => {
+    v.controls = true; box.classList.add("playing"); v.play().catch(() => {});
+  });
+  v.addEventListener("play", () => document.querySelectorAll("[data-vid] video").forEach(o => { if (o !== v) o.pause(); }));
+});
+
+$("form").addEventListener("submit", e => {
+  e.preventDefault();
+  const f = e.target, L = T[lang], done = $("done");
+  f.querySelectorAll("[required]").forEach(el => el.classList.remove("bad"));
+  const bad = [...f.querySelectorAll("[required]")].filter(el => !el.value.trim() || (el.type === "email" && !/^\S+@\S+\.\S+$/.test(el.value)));
+  done.hidden = false;
+  if (bad.length) {
+    bad.forEach(el => el.classList.add("bad"));
+    bad[0].focus();
+    done.textContent = L.err;
+    return;
   }
+  const d = Object.fromEntries(new FormData(f));
+  const subject = `${L.m_subject}: ${d.topic} – ${d.org}`;
+  const body = `${d.first} ${d.last}\n${d.mail}\n${d.org}\n\n${L.m_group}: ${d.group}\n${L.m_size}: ${d.size}\n${L.m_topic}: ${d.topic}\n${L.m_when}: ${d.when}\n\n${d.msg}`;
+  const href = "mailto:Basharahmed.duis@gmail.com?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+  done.innerHTML = `${esc(L.done)} <a href="${href}">${esc(L.done_link)}</a><br><small>${esc(L.done_small)}</small>`;
+});
 </script>
-</body>
-</html>
