@@ -481,6 +481,7 @@ footer { background: var(--ink); color: var(--paper); padding-block: 0 calc(36px
         </div>
         <div class="field"><label for="f-topic" data-t="f_topic"></label><select id="f-topic" name="topic" required data-opts="topic"></select></div>
         <div class="field"><label for="f-when" data-t="f_when"></label><input id="f-when" name="when" data-ph="ph_when"></div>
+        <input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
         <div class="field"><label for="f-msg" data-t="f_msg"></label><textarea id="f-msg" name="msg" required data-ph="ph_msg"></textarea></div>
         <button class="btn" type="submit"><span data-t="f_submit"></span><span class="arr">→</span></button>
         <div class="done" id="done" hidden></div>
@@ -554,7 +555,8 @@ de: {
   done: "Ihre Anfrage ist vorbereitet.", done_link: "In Ihrem E-Mail-Programm öffnen →",
   done_small: "Falls sich nichts öffnet: bitte direkt an Basharahmed.duis@gmail.com schreiben.",
   m_subject: "Workshop-Anfrage", m_group: "Zielgruppe", m_size: "Teilnehmer", m_topic: "Thema", m_when: "Zeitraum",
-  rights: "Alle Rechte vorbehalten.", top: "Nach oben"
+  rights: "Alle Rechte vorbehalten.", top: "Nach oben",
+  f_sending: "Wird gesendet …", sent: "Danke! Ihre Anfrage wurde gesendet.", sent_small: "Ich melde mich innerhalb von 48 Stunden bei Ihnen.", fail: "Das Senden hat leider nicht geklappt."
 },
 en: {
   nav_about: "About", nav_ws: "Workshops", nav_stage: "Stage", nav_gal: "Gallery", nav_book: "Book",
@@ -609,7 +611,8 @@ en: {
   done: "Your inquiry is ready.", done_link: "Open it in your email app →",
   done_small: "If nothing opens, please write directly to Basharahmed.duis@gmail.com.",
   m_subject: "Workshop inquiry", m_group: "Group", m_size: "Participants", m_topic: "Topic", m_when: "Timeframe",
-  rights: "All rights reserved.", top: "Top"
+  rights: "All rights reserved.", top: "Top",
+  f_sending: "Sending …", sent: "Thank you! Your inquiry has been sent.", sent_small: "I'll get back to you within 48 hours.", fail: "Sorry, sending didn't work."
 },
 ku: {
   nav_about: "Ez kî me", nav_ws: "Komxebat", nav_stage: "Li ser dikê", nav_gal: "Wêne", nav_book: "Daxwaz",
@@ -664,7 +667,8 @@ ku: {
   done: "Daxwaza we amade ye.", done_link: "Di bernameya e-nameyê de veke →",
   done_small: "Heke tiştek venebe, ji kerema xwe rasterast ji Basharahmed.duis@gmail.com re binivîsin.",
   m_subject: "Daxwaza komxebatê", m_group: "Koma armanc", m_size: "Beşdar", m_topic: "Mijar", m_when: "Dem",
-  rights: "Hemû maf parastî ne.", top: "Jor"
+  rights: "Hemû maf parastî ne.", top: "Jor",
+  f_sending: "Tê şandin …", sent: "Spas! Daxwaza we hat şandin.", sent_small: "Ez ê di nav 48 saetan de vegerim we.", fail: "Mixabin, şandin bi ser neket."
 },
 ar: {
   nav_about: "من أنا", nav_ws: "الورش", nav_stage: "على المنصّة", nav_gal: "صور", nav_book: "احجز ورشة",
@@ -719,7 +723,8 @@ ar: {
   done: "طلبكم جاهز.", done_link: "افتحه في تطبيق البريد ←",
   done_small: "إذا لم يُفتح شيء، راسلوني مباشرة على Basharahmed.duis@gmail.com.",
   m_subject: "طلب ورشة", m_group: "الفئة", m_size: "عدد المشاركين", m_topic: "الموضوع", m_when: "الموعد",
-  rights: "جميع الحقوق محفوظة.", top: "للأعلى"
+  rights: "جميع الحقوق محفوظة.", top: "للأعلى",
+  f_sending: "جارٍ الإرسال …", sent: "شكرًا! تم إرسال طلبكم.", sent_small: "سأتواصل معكم خلال 48 ساعة.", fail: "عذرًا، لم ينجح الإرسال."
 }
 };
 
@@ -801,9 +806,10 @@ document.querySelectorAll("[data-vid]").forEach(box => {
   v.addEventListener("play", () => document.querySelectorAll("[data-vid] video").forEach(o => { if (o !== v) o.pause(); }));
 });
 
-$("form").addEventListener("submit", e => {
+const FORM_ENDPOINT = "https://formsubmit.co/ajax/Basharahmed.duis@gmail.com";
+$("form").addEventListener("submit", async e => {
   e.preventDefault();
-  const f = e.target, L = T[lang], done = $("done");
+  const f = e.target, L = T[lang], done = $("done"), btn = f.querySelector('button[type="submit"]');
   f.querySelectorAll("[required]").forEach(el => el.classList.remove("bad"));
   const bad = [...f.querySelectorAll("[required]")].filter(el => !el.value.trim() || (el.type === "email" && !/^\S+@\S+\.\S+$/.test(el.value)));
   done.hidden = false;
@@ -814,9 +820,35 @@ $("form").addEventListener("submit", e => {
     return;
   }
   const d = Object.fromEntries(new FormData(f));
+  if (d._honey) return; // spam bot
   const subject = `${L.m_subject}: ${d.topic} – ${d.org}`;
   const body = `${d.first} ${d.last}\n${d.mail}\n${d.org}\n\n${L.m_group}: ${d.group}\n${L.m_size}: ${d.size}\n${L.m_topic}: ${d.topic}\n${L.m_when}: ${d.when}\n\n${d.msg}`;
-  const href = "mailto:Basharahmed.duis@gmail.com?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
-  done.innerHTML = `${esc(L.done)} <a href="${href}">${esc(L.done_link)}</a><br><small>${esc(L.done_small)}</small>`;
+  const label = btn.innerHTML;
+  btn.disabled = true; btn.textContent = L.f_sending;
+  done.hidden = true;
+  try {
+    const res = await fetch(FORM_ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Accept": "application/json" },
+      body: JSON.stringify({
+        _subject: subject, _template: "table", _captcha: "false",
+        Name: `${d.first} ${d.last}`, email: d.mail, Institution: d.org,
+        Zielgruppe: d.group, Teilnehmer: d.size, Thema: d.topic, Zeitraum: d.when || "–",
+        Nachricht: d.msg, Sprache: lang.toUpperCase()
+      })
+    });
+    const out = await res.json().catch(() => ({}));
+    if (!res.ok || String(out.success) === "false") throw new Error(out.message || res.status);
+    done.hidden = false;
+    done.innerHTML = `<strong>${esc(L.sent)}</strong><br><small>${esc(L.sent_small)}</small>`;
+    f.reset(); render(); done.hidden = false;
+    done.innerHTML = `<strong>${esc(L.sent)}</strong><br><small>${esc(L.sent_small)}</small>`;
+  } catch (err) {
+    const href = "mailto:Basharahmed.duis@gmail.com?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+    done.hidden = false;
+    done.innerHTML = `${esc(L.fail)} <a href="${href}">${esc(L.done_link)}</a><br><small>${esc(L.done_small)}</small>`;
+  } finally {
+    btn.disabled = false; btn.innerHTML = label;
+  }
 });
 </script>
